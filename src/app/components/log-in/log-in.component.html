@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body">
             <div class="row mt-0 g-3">
               <h3 class="card-title text-center fw-semibold">Log in</h3>
@@ -51,8 +51,9 @@
               </div>
 
               <div class="col-12">
-                <button type="button" class="btn btn-outline-primary w-100" (click)="onClick()">
-                  Continue with Google
+                <button type="button" class="btn btn-outline-danger w-100" (click)="onClick()">
+                  <div class="float-start"><i class="bi bi-google"></i></div>
+                  Log in with Google
                 </button>
               </div>
             </div>
