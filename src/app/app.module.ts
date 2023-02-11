@@ -18,9 +18,10 @@ import { HomeComponent } from './components/home/home.component';
 
 // Services
 import { AuthService } from './services/auth.service';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
-  declarations: [AppComponent, VerifyComponent, SignUpComponent, LogInComponent, HomeComponent],
+  declarations: [AppComponent, VerifyComponent, SignUpComponent, LogInComponent, HomeComponent, ChatComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,0 +1,8 @@
+.msg-l {
+  background-color: #e8e8eb;
+}
+
+.scroll {
+  height: 80vh;
+  overflow-y: auto;
+}
