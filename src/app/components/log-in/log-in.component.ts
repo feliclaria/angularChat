@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,13 +7,21 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css']
 })
-export class LogInComponent {
+export class LogInComponent implements OnInit {
+  serverError: string = '';
+
   logInForm = this.fb.group({
     email: [''],
     password: ['']
   });
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.logInErrors.subscribe((error) => {
+      this.serverError = error;
+    });
+  }
 
   get email() {
     return this.logInForm.value.email;
@@ -28,11 +36,6 @@ export class LogInComponent {
   }
 
   onSubmit() {
-    if (!this.logInForm.valid || !this.email || !this.password) {
-      console.log(this.logInForm);
-      return;
-    }
-
     this.authService.logIn(this.email, this.password);
   }
 
