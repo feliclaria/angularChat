@@ -15,7 +15,7 @@
                     placeholder="Email"
                     formControlName="email"
                     [ngClass]="{
-                      'is-invalid': formControls.email.touched && serverError
+                      'is-invalid': formControls.email.touched && serverErrorMessage
                     }"
                   />
                 </div>
@@ -27,11 +27,11 @@
                     placeholder="Password"
                     formControlName="password"
                     [ngClass]="{
-                      'is-invalid': formControls.password.touched && serverError
+                      'is-invalid': formControls.password.touched && serverErrorMessage
                     }"
                   />
-                  <div *ngIf="serverError" class="invalid-feedback d-block">
-                    {{ serverError }}
+                  <div *ngIf="serverErrorMessage" class="invalid-feedback d-block">
+                    {{ serverErrorMessage }}
                   </div>
                 </div>
 

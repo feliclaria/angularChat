@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -24,7 +24,9 @@ const passwordsDontMatchValidator: ValidatorFn = (
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
+  serverErrorMessage: string = '';
+
   signUpForm = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
@@ -44,6 +46,12 @@ export class SignUpComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
+  ngOnInit() {
+    this.authService.serverErrors.subscribe((message) => {
+      this.serverErrorMessage = message;
+    });
+  }
+
   get email() {
     return this.signUpForm.value.email;
   }
@@ -57,11 +65,7 @@ export class SignUpComponent {
   }
 
   onSubmit() {
-    if (!this.signUpForm.valid || !this.email || !this.password) {
-      return;
-    }
-
-    this.authService.signUp(this.email, this.password);
+    this.authService.signUp(this.email!, this.password!);
   }
 
   onClick() {

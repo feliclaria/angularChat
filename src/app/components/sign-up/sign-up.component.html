@@ -16,8 +16,9 @@
                     formControlName="email"
                     required
                     [ngClass]="{
-                      'is-invalid': formControls.email.touched && formControls.email.errors,
-                      'is-valid': formControls.email.valid
+                      'is-invalid':
+                        formControls.email.touched &&
+                        (formControls.email.errors || serverErrorMessage)
                     }"
                   />
 
@@ -25,12 +26,12 @@
                     *ngIf="formControls.email.touched && formControls.email.touched"
                     class="invalid-feedback"
                   >
-                    <div *ngIf="formControls.email.errors?.['required'] else errorEmail">
+                    <div *ngIf="formControls.email.errors?.['required'] else authServerError">
                       Email is required
                     </div>
 
-                    <ng-template #errorEmail>
-                      {{ email }} is not a valid email address
+                    <ng-template #authServerError>
+                      {{ serverErrorMessage }}
                     </ng-template>
                   </div>
                 </div>
@@ -43,8 +44,7 @@
                     formControlName="password"
                     required
                     [ngClass]="{
-                      'is-invalid': formControls.password.touched && formControls.password.errors,
-                      'is-valid': formControls.password.valid
+                      'is-invalid': formControls.password.touched && formControls.password.errors
                     }"
                   />
 
@@ -79,8 +79,7 @@
                     formControlName="confirmPassword"
                     required
                     [ngClass]="{
-                      'is-invalid': signUpForm.errors && (signUpForm.touched || signUpForm.dirty),
-                      'is-valid': signUpForm.valid
+                      'is-invalid': signUpForm.errors && (signUpForm.touched || signUpForm.dirty)
                     }"
                   />
                   <div

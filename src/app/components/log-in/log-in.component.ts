@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent implements OnInit {
-  serverError: string = '';
+  serverErrorMessage: string = '';
 
   logInForm = this.fb.group({
     email: [''],
@@ -18,8 +18,8 @@ export class LogInComponent implements OnInit {
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.logInErrors.subscribe((error) => {
-      this.serverError = error;
+    this.authService.serverErrors.subscribe((message) => {
+      this.serverErrorMessage = message;
     });
   }
 
