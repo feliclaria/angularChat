@@ -6,8 +6,8 @@ body {
 }
 
 .text-divider {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
   display: flex;
   align-items: center;
   --text-divider-gap: 1rem;
