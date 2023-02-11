@@ -9,16 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LogInComponent {
   logInForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(30),
-        Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/)
-      ]
-    ]
+    email: [''],
+    password: ['']
   });
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
@@ -29,6 +21,10 @@ export class LogInComponent {
 
   get password() {
     return this.logInForm.value.password;
+  }
+
+  get formControls() {
+    return this.logInForm.controls;
   }
 
   onSubmit() {

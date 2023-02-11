@@ -15,7 +15,24 @@
                     placeholder="Email"
                     formControlName="email"
                     required
+                    [ngClass]="{
+                      'is-invalid': formControls.email.touched && formControls.email.errors,
+                      'is-valid': formControls.email.valid
+                    }"
                   />
+
+                  <div
+                    *ngIf="formControls.email.touched && formControls.email.touched"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="formControls.email.errors?.['required'] else errorEmail">
+                      Email is required
+                    </div>
+
+                    <ng-template #errorEmail>
+                      {{ email }} is not a valid email address
+                    </ng-template>
+                  </div>
                 </div>
 
                 <div class="col-12">
@@ -25,7 +42,33 @@
                     placeholder="Password"
                     formControlName="password"
                     required
+                    [ngClass]="{
+                      'is-invalid': formControls.password.touched && formControls.password.errors,
+                      'is-valid': formControls.password.valid
+                    }"
                   />
+
+                  <div
+                    *ngIf="formControls.password.touched && formControls.password.touched"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="formControls.password.errors?.['required'] else errorMaxLength">
+                      Password is required
+                    </div>
+
+                    <ng-template #errorMaxLength>
+                      <div
+                        *ngIf="formControls.password.errors?.['maxlength'] else errorNotValidPassword"
+                      >
+                        The password cannot be longer than 30 characters
+                      </div>
+                    </ng-template>
+
+                    <ng-template #errorNotValidPassword>
+                      Passwords must have at least 8 characters and contain all of the following:
+                      lowercase letters, upercase letters, and numbers
+                    </ng-template>
+                  </div>
                 </div>
 
                 <div class="col-12">
@@ -35,20 +78,23 @@
                     placeholder="Confirm password"
                     formControlName="confirmPassword"
                     required
+                    [ngClass]="{
+                      'is-invalid': signUpForm.errors && (signUpForm.touched || signUpForm.dirty),
+                      'is-valid': signUpForm.valid
+                    }"
                   />
-
-                  <!-- <div
+                  <div
                     *ngIf="signUpForm.errors?.['passwordsDontMatch'] && (signUpForm.touched || signUpForm.dirty)"
-                    class="text-danger"
+                    class="invalid-feedback"
                   >
-                    <small>Passwords must match</small>
-                  </div> -->
+                    Passwords do not match
+                  </div>
                 </div>
 
                 <div class="col-12">
                   <button
                     type="submit"
-                    class="btn btn-primary btn w-100"
+                    class="btn btn-primary w-100"
                     [disabled]="!signUpForm.valid"
                   >
                     Sign up

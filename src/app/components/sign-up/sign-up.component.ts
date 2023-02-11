@@ -52,6 +52,10 @@ export class SignUpComponent {
     return this.signUpForm.value.password;
   }
 
+  get formControls() {
+    return this.signUpForm.controls;
+  }
+
   onSubmit() {
     if (!this.signUpForm.valid || !this.email || !this.password) {
       return;
