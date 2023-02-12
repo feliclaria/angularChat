@@ -1,116 +1,114 @@
 <div class="container">
-  <div class="row">
-    <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h3 class="card-title text-center fw-semibold my-3">Sign up</h3>
+  <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center fw-semibold my-3">Sign up</h3>
 
-          <form class="row gy-2" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-            <div class="col-12">
-              <input
-                type="text"
-                class="form-control form-control-lg fs-6"
-                placeholder="Email"
-                formControlName="email"
-                required
-                [ngClass]="{
-                  'is-invalid':
-                    formControls.email.touched && (formControls.email.errors || serverErrorMessage)
-                }"
-              />
+        <form class="row gy-2" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control form-control-lg fs-6"
+              placeholder="Email"
+              formControlName="email"
+              required
+              [ngClass]="{
+                'is-invalid':
+                  formControls.email.touched && (formControls.email.errors || serverErrorMessage)
+              }"
+            />
 
-              <div
-                *ngIf="formControls.email.touched && formControls.email.touched"
-                class="invalid-feedback"
-              >
-                <div *ngIf="formControls.email.errors?.['required'] else authServerError">
-                  Email is required
-                </div>
-
-                <ng-template #authServerError>
-                  {{ serverErrorMessage }}
-                </ng-template>
+            <div
+              *ngIf="formControls.email.touched && formControls.email.touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="formControls.email.errors?.['required'] else authServerError">
+                Email is required
               </div>
+
+              <ng-template #authServerError>
+                {{ serverErrorMessage }}
+              </ng-template>
             </div>
-
-            <div class="col-12">
-              <input
-                type="password"
-                class="form-control form-control-lg fs-6"
-                placeholder="Password"
-                formControlName="password"
-                required
-                [ngClass]="{
-                  'is-invalid': formControls.password.touched && formControls.password.errors
-                }"
-              />
-
-              <div
-                *ngIf="formControls.password.touched && formControls.password.touched"
-                class="invalid-feedback"
-              >
-                <div *ngIf="formControls.password.errors?.['required'] else errorMaxLength">
-                  Password is required
-                </div>
-
-                <ng-template #errorMaxLength>
-                  <div
-                    *ngIf="formControls.password.errors?.['maxlength'] else errorNotValidPassword"
-                  >
-                    The password cannot be longer than 30 characters
-                  </div>
-                </ng-template>
-
-                <ng-template #errorNotValidPassword>
-                  Passwords must have at least 8 characters and contain all of the following:
-                  lowercase letters, upercase letters, and numbers
-                </ng-template>
-              </div>
-            </div>
-
-            <div class="col-12">
-              <input
-                type="password"
-                class="form-control form-control-lg fs-6"
-                placeholder="Confirm password"
-                formControlName="confirmPassword"
-                required
-                [ngClass]="{
-                  'is-invalid': signUpForm.errors && (signUpForm.touched || signUpForm.dirty)
-                }"
-              />
-              <div
-                *ngIf="signUpForm.errors?.['passwordsDontMatch'] && (signUpForm.touched || signUpForm.dirty)"
-                class="invalid-feedback"
-              >
-                Passwords do not match
-              </div>
-            </div>
-
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary btn-lg" [disabled]="!signUpForm.valid">
-                Sign up
-              </button>
-            </div>
-          </form>
+          </div>
 
           <div class="col-12">
-            <div class="text-divider"><small>or</small></div>
+            <input
+              type="password"
+              class="form-control form-control-lg fs-6"
+              placeholder="Password"
+              formControlName="password"
+              required
+              [ngClass]="{
+                'is-invalid': formControls.password.touched && formControls.password.errors
+              }"
+            />
+
+            <div
+              *ngIf="formControls.password.touched && formControls.password.touched"
+              class="invalid-feedback"
+            >
+              <div *ngIf="formControls.password.errors?.['required'] else errorMaxLength">
+                Password is required
+              </div>
+
+              <ng-template #errorMaxLength>
+                <div *ngIf="formControls.password.errors?.['maxlength'] else errorNotValidPassword">
+                  The password cannot be longer than 30 characters
+                </div>
+              </ng-template>
+
+              <ng-template #errorNotValidPassword>
+                Passwords must have at least 8 characters and contain all of the following:
+                lowercase letters, upercase letters, and numbers
+              </ng-template>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <input
+              type="password"
+              class="form-control form-control-lg fs-6"
+              placeholder="Confirm password"
+              formControlName="confirmPassword"
+              required
+              [ngClass]="{
+                'is-invalid': signUpForm.errors && (signUpForm.touched || signUpForm.dirty)
+              }"
+            />
+            <div
+              *ngIf="signUpForm.errors?.['passwordsDontMatch'] && (signUpForm.touched || signUpForm.dirty)"
+              class="invalid-feedback"
+            >
+              Passwords do not match
+            </div>
           </div>
 
           <div class="d-grid">
-            <button type="button" class="btn btn-outline-danger" (click)="onClick()">
-              <div class="float-start"><i class="bi bi-google"></i></div>
-              Continue with Google
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="!signUpForm.valid">
+              Sign up
             </button>
           </div>
+        </form>
+
+        <div class="col-12">
+          <div class="small text-divider text-muted">or</div>
         </div>
 
-        <div class="card-footer">
-          <p class="card-text fw-light">
-            Already have an account? <a routerLink="/login">Log in</a>
-          </p>
+        <div class="d-grid">
+          <button
+            type="button"
+            class="btn btn-outline-danger position-relative"
+            (click)="onClick()"
+          >
+            <i class="float-start bi bi-google"></i>
+            <div class="position-absolute top-50 start-50 translate-middle">Join with Google</div>
+          </button>
         </div>
+      </div>
+
+      <div class="card-footer">
+        <p class="card-text fw-light">Already have an account? <a routerLink="/login">Log in</a></p>
       </div>
     </div>
   </div>

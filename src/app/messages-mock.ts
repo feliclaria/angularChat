@@ -2,31 +2,23 @@ import { Message } from './interfaces/message';
 
 export const messages: Message[] = [
   {
-    text: 'Hi',
+    text: 'There she is!',
     date: new Date('2023-02-11T13:39:00'),
     user: {
-      name: 'TheoUnderStars',
+      name: 'Theo',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
     }
   },
   {
-    text: 'How are you ...???',
+    text: 'Long time no see, Strawberry.',
     date: new Date('2023-02-11T13:39:00'),
     user: {
-      name: 'TheoUnderStars',
+      name: 'Theo',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
     }
   },
   {
-    text: 'What are you doing tomorrow? Can we come up a bar?',
-    date: new Date('2023-02-11T13:40:00'),
-    user: {
-      name: 'TheoUnderStars',
-      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
-    }
-  },
-  {
-    text: "Hiii, I'm good.",
+    text: 'Hey Theo',
     date: new Date('2023-02-11T13:41:00'),
     user: {
       name: 'Maddy',
@@ -34,67 +26,43 @@ export const messages: Message[] = [
     }
   },
   {
-    text: 'How are you doing?',
+    text: "It's been forever!",
     date: new Date('2023-02-11T13:41:00'),
     user: {
-      name: 'Maddy',
-      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
+      name: 'Theo',
+      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
     }
   },
   {
-    text: 'Long time no see! Tomorrow office. will be free on sunday.',
+    text: 'You went off the grid!\nWhat happened to you?',
     date: new Date('2023-02-11T13:42:00'),
     user: {
+      name: 'Theo',
+      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
+    }
+  },
+  {
+    text: 'Yeah, sorry for not responding to your messages...',
+    date: new Date('2023-02-11T13:43:00'),
+    user: {
       name: 'Maddy',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
     }
   },
   {
-    text: 'Okay',
+    text: '...or answering your calls...',
     date: new Date('2023-02-11T13:43:00'),
     user: {
-      name: 'TheoUnderStars',
-      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
+      name: 'Maddy',
+      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
     }
   },
   {
-    text: 'We will go on Sunday?',
-    date: new Date('2023-02-11T13:43:00'),
-    user: {
-      name: 'TheoUnderStars',
-      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
-    }
-  },
-  {
-    text: "That's awesome!",
+    text: '...or replying to your emails.',
     date: new Date('2023-02-11T13:44:00'),
     user: {
       name: 'Maddy',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
-    }
-  },
-  {
-    text: 'I will meet you Sandon Square sharp at 10 AM',
-    date: new Date('2023-02-11T13:44:00'),
-    user: {
-      name: 'Maddy',
-      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
-    }
-  },
-  {
-    text: 'Is that okay?',
-    date: new Date('2023-02-11T13:45:00'),
-    user: {
-      name: 'Maddy',
-      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
-    }
-  },
-  {
-    text: 'Okay i will meet you on Sandon Square',
-    date: new Date('2023-02-11T13:51:00'),
-    user: {
-      name: 'TheoUnderStars',
-      avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
     }
   }
 ];

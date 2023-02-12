@@ -1,62 +1,62 @@
 <div class="container">
-  <div class="row">
-    <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h3 class="card-title text-center fw-semibold my-3">Log in</h3>
+  <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center fw-semibold my-3">Log in</h3>
 
-          <form class="row gy-2" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
-            <div class="col-12">
-              <input
-                type="text"
-                class="form-control form-control-lg fs-6"
-                placeholder="Email"
-                formControlName="email"
-                [ngClass]="{
-                  'is-invalid': formControls.email.touched && serverErrorMessage
-                }"
-              />
-            </div>
-
-            <div class="col-12">
-              <input
-                type="password"
-                class="form-control form-control-lg fs-6"
-                placeholder="Password"
-                formControlName="password"
-                [ngClass]="{
-                  'is-invalid': formControls.password.touched && serverErrorMessage
-                }"
-              />
-              <div *ngIf="serverErrorMessage" class="invalid-feedback d-block">
-                {{ serverErrorMessage }}
-              </div>
-            </div>
-
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary btn-lg" [disabled]="!logInForm.valid">
-                Log in
-              </button>
-            </div>
-          </form>
+        <form class="row gy-2" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control form-control-lg fs-6"
+              placeholder="Email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': formControls.email.touched && serverErrorMessage
+              }"
+            />
+          </div>
 
           <div class="col-12">
-            <div class="text-divider"><small>or</small></div>
+            <input
+              type="password"
+              class="form-control form-control-lg fs-6"
+              placeholder="Password"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': formControls.password.touched && serverErrorMessage
+              }"
+            />
+            <div *ngIf="serverErrorMessage" class="invalid-feedback d-block">
+              {{ serverErrorMessage }}
+            </div>
           </div>
 
           <div class="d-grid">
-            <button type="button" class="btn btn-outline-danger" (click)="onClick()">
-              <div class="float-start"><i class="bi bi-google"></i></div>
-              Log in with Google
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="!logInForm.valid">
+              Log in
             </button>
           </div>
+        </form>
+
+        <div class="col-12">
+          <div class="small text-divider text-muted">or</div>
         </div>
 
-        <div class="card-footer">
-          <p class="card-text fw-light">
-            Don't have an account? <a routerLink="/signup">Sign up</a>
-          </p>
+        <div class="d-grid">
+          <button
+            type="button"
+            class="btn btn-outline-danger position-relative"
+            (click)="onClick()"
+          >
+            <i class="float-start bi bi-google"></i>
+            <div class="position-absolute top-50 start-50 translate-middle">Log in with Google</div>
+          </button>
         </div>
+      </div>
+
+      <div class="card-footer">
+        <p class="card-text fw-light">Don't have an account? <a routerLink="/signup">Sign up</a></p>
       </div>
     </div>
   </div>

@@ -1,110 +1,142 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <div class="card shadow-sm">
-        <div class="card-header">
-          <h5 class="mb-0">Chat room</h5>
-          <p class="small text-muted mb-0">2 members</p>
-        </div>
+<div class="card shadow-sm">
+  <div class="card-header">
+    <h5 class="mb-0">Chat room</h5>
+    <p class="small text-muted mb-0">2 members</p>
+  </div>
 
-        <div class="card-body scroll d-flex flex-column justify-content-end">
-          <div class="text-divider text-muted">
-            <small>{{ messages[0].date | date }}</small>
-          </div>
+  <div class="card-body d-flex flex-column-reverse overflow-y-scroll">
+    <div class="">
+      <div class="small text-divider text-muted">
+        {{ messages[0].date | date }}
+      </div>
 
-          <div class="row gx-3 mb-2 align-items-end">
-            <div class="col-2">
-              <img
-                class="rounded-circle w-100"
-                [src]="messages[0].user.avatar"
-                [alt]="messages[0].user.name"
-              />
-            </div>
+      <div class="d-flex justify-content-start align-items-end p-2">
+        <img
+          class="rounded-circle"
+          width="40rem"
+          [src]="messages[0].user.avatar"
+          [alt]="messages[0].user.name"
+        />
+        <div class="row gy-1 px-1 me-3">
+          <div class="col-12">
+            <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
+              <p class="text-start text-success fw-semibold my-0 me-2">
+                {{ messages[0].user.name }}
+              </p>
 
-            <div class="col-10">
-              <div class="row gy-1">
-                <div class="col-12">
-                  <div class="small d-inline-block rounded-3 ps-2 p-1 msg-l">
-                    <p class="text-start text-success fw-semibold my-0 me-2">
-                      {{ messages[0].user.name }}
-                    </p>
-                    <p class="text-start my-0 me-2">{{ messages[0].text }}</p>
-                    <p class="small text-end text-muted fw-light my-0 lh-1">
-                      {{ messages[0].date | date : 'HH:mm' }}
-                    </p>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="small d-inline-block rounded-3 ps-2 p-1 msg-l">
-                    <p class="text-start my-0 me-2">{{ messages[1].text }}</p>
-                    <p class="small text-end text-muted fw-light my-0 lh-1">
-                      {{ messages[1].date | date : 'HH:mm' }}
-                    </p>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="small d-inline-block rounded-3 ps-2 p-1 msg-l">
-                    <p class="text-start my-0 me-2">{{ messages[2].text }}</p>
-                    <p class="small text-end text-muted fw-light my-0">
-                      {{ messages[2].date | date : 'HH:mm' }}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <p class="text-start my-0 me-2">{{ messages[0].text }}</p>
+              <p class="small text-end text-muted fw-light my-0 lh-1">
+                {{ messages[0].date | date : 'HH:mm' }}
+              </p>
             </div>
           </div>
 
-          <div class="row gx-3 mb-2 align-items-end">
-            <div class="col-10">
-              <div class="row gy-1">
-                <div class="col-12 d-flex justify-content-end">
-                  <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
-                    <p class="text-start text-white my-0 me-2">{{ messages[3].text }}</p>
-                    <p class="small text-end text-light fw-light my-0 lh-1">
-                      {{ messages[3].date | date : 'HH:mm' }}
-                    </p>
-                  </div>
-                </div>
-
-                <div class="col-12 d-flex justify-content-end">
-                  <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
-                    <p class="text-start text-white my-0 me-2">{{ messages[4].text }}</p>
-                    <p class="small text-end text-light fw-light my-0 lh-1">
-                      {{ messages[4].date | date : 'HH:mm' }}
-                    </p>
-                  </div>
-                </div>
-
-                <div class="col-12 d-flex justify-content-end">
-                  <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
-                    <p class="text-start text-white my-0 me-2">{{ messages[5].text }}</p>
-                    <p class="small text-end text-light fw-light my-0">
-                      {{ messages[5].date | date : 'HH:mm' }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-2">
-              <img
-                class="rounded-circle w-100"
-                [src]="messages[3].user.avatar"
-                [alt]="messages[3].user.name"
-              />
+          <div class="col-12">
+            <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
+              <p class="text-start my-0 me-2">{{ messages[1].text }}</p>
+              <p class="small text-end text-muted fw-light my-0 lh-1">
+                {{ messages[1].date | date : 'HH:mm' }}
+              </p>
             </div>
           </div>
-        </div>
-
-        <div class="card-footer text-muted d-flex align-items-center p-2">
-          <input type="text" class="form-control" placeholder="Type message..." />
-          <button class="btn btn-outline-primary ms-2">
-            <i class="bi bi-send"></i>
-          </button>
         </div>
       </div>
+
+      <div class="d-flex justify-content-end align-items-end p-2">
+        <div class="row gy-1 px-1 ms-3">
+          <div class="col-12 d-flex justify-content-end">
+            <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
+              <p class="text-start text-white my-0 me-2">{{ messages[2].text }}</p>
+              <p class="small text-end text-light fw-light my-0 lh-1">
+                {{ messages[2].date | date : 'HH:mm' }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <img
+          class="rounded-circle"
+          width="40rem"
+          [src]="messages[2].user.avatar"
+          [alt]="messages[2].user.name"
+        />
+      </div>
+
+      <div class="d-flex justify-content-start align-items-end p-2">
+        <img
+          class="rounded-circle"
+          width="40rem"
+          [src]="messages[3].user.avatar"
+          [alt]="messages[3].user.name"
+        />
+        <div class="row gy-1 px-1 me-3">
+          <div class="col-12">
+            <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
+              <p class="text-start text-success fw-semibold my-0 me-2">
+                {{ messages[3].user.name }}
+              </p>
+              <p class="text-start my-0 me-2">{{ messages[3].text }}</p>
+              <p class="small text-end text-muted fw-light my-0 lh-1">
+                {{ messages[3].date | date : 'HH:mm' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
+              <p class="text-start my-0 me-2">{{ messages[4].text }}</p>
+              <p class="small text-end text-muted fw-light my-0 lh-1">
+                {{ messages[4].date | date : 'HH:mm' }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end align-items-end p-2">
+        <div class="row gy-1 px-1 ms-3">
+          <div class="col-12 d-flex justify-content-end">
+            <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
+              <p class="text-start text-white my-0 me-2">{{ messages[5].text }}</p>
+              <p class="small text-end text-light fw-light my-0 lh-1">
+                {{ messages[5].date | date : 'HH:mm' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 d-flex justify-content-end">
+            <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
+              <p class="text-start text-white my-0 me-2">{{ messages[6].text }}</p>
+              <p class="small text-end text-light fw-light my-0 lh-1">
+                {{ messages[6].date | date : 'HH:mm' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 d-flex justify-content-end">
+            <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
+              <p class="text-start text-white my-0 me-2">{{ messages[7].text }}</p>
+              <p class="small text-end text-light fw-light my-0 lh-1">
+                {{ messages[7].date | date : 'HH:mm' }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <img
+          class="rounded-circle"
+          width="40rem"
+          [src]="messages[5].user.avatar"
+          [alt]="messages[5].user.name"
+        />
+      </div>
     </div>
+  </div>
+
+  <div class="card-footer text-muted d-flex align-items-center p-2">
+    <input type="text" class="form-control" placeholder="Type message..." />
+    <button class="btn btn-outline-primary ms-2">
+      <i class="bi bi-send"></i>
+    </button>
   </div>
 </div>

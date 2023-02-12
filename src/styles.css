@@ -16,7 +16,7 @@ body {
 .text-divider::before,
 .text-divider::after {
   content: '';
-  height: 1px;
+  height: 0.05rem;
   background-color: silver;
   flex-grow: 1;
 }
