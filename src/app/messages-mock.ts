@@ -1,6 +1,6 @@
 import { Message } from './interfaces/message';
 
-export const messages: Message[] = [
+export const mockMessages: Message[] = [
   {
     text: 'There she is!',
     date: new Date('2023-02-11T13:39:00'),
@@ -21,7 +21,7 @@ export const messages: Message[] = [
     text: 'Hey Theo',
     date: new Date('2023-02-11T13:41:00'),
     user: {
-      name: 'Maddy',
+      name: 'Madeline',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
     }
   },
@@ -45,7 +45,7 @@ export const messages: Message[] = [
     text: 'Yeah, sorry for not responding to your messages...',
     date: new Date('2023-02-11T13:43:00'),
     user: {
-      name: 'Maddy',
+      name: 'Madeline',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
     }
   },
@@ -53,15 +53,15 @@ export const messages: Message[] = [
     text: '...or answering your calls...',
     date: new Date('2023-02-11T13:43:00'),
     user: {
-      name: 'Maddy',
+      name: 'Madeline',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
     }
   },
   {
     text: '...or replying to your emails.',
-    date: new Date('2023-02-11T13:44:00'),
+    date: new Date('2024-02-11T13:44:00'),
     user: {
-      name: 'Maddy',
+      name: 'Madeline',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
     }
   }
