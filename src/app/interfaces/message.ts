@@ -6,12 +6,17 @@ export interface Message {
   user: UserProfile;
 }
 
-export interface MessageGroup {
+export interface UserMessages {
   user: UserProfile;
   messages: { text: string; date: Date }[];
 }
 
-export interface MessageCluster {
+export interface DateMessages {
   date: Date;
-  messages: MessageGroup[];
+  messages: Message[];
+}
+
+export interface MessageStream {
+  date: Date;
+  messages: UserMessages[];
 }

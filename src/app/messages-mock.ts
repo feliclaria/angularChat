@@ -11,7 +11,7 @@ export const mockMessages: Message[] = [
   },
   {
     text: 'Long time no see, Strawberry.',
-    date: new Date('2023-02-11T13:39:00'),
+    date: new Date('2023-02-11T13:39:10'),
     user: {
       name: 'Theo',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
@@ -27,7 +27,7 @@ export const mockMessages: Message[] = [
   },
   {
     text: "It's been forever!",
-    date: new Date('2023-02-11T13:41:00'),
+    date: new Date('2023-02-11T13:41:10'),
     user: {
       name: 'Theo',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/theo2png.png'
@@ -51,7 +51,7 @@ export const mockMessages: Message[] = [
   },
   {
     text: '...or answering your calls...',
-    date: new Date('2023-02-11T13:43:00'),
+    date: new Date('2023-02-11T13:43:10'),
     user: {
       name: 'Madeline',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
