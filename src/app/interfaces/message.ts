@@ -1,17 +1,13 @@
+import { UserProfile } from './user-profile';
+
 export interface Message {
   text: string;
   date: Date;
-  user: {
-    name: string;
-    avatar: string;
-  };
+  user: UserProfile;
 }
 
 export interface MessageGroup {
-  user: {
-    name: string;
-    avatar: string;
-  };
+  user: UserProfile;
   messages: { text: string; date: Date }[];
 }
 

@@ -11,7 +11,7 @@
 
         <div *ngFor="let msgGroup of msgCluster.messages">
           <div
-            *ngIf="msgGroup.user.name === currentUser"
+            *ngIf="msgGroup.user.name === currentUser?.name"
             class="d-flex justify-content-end align-items-end p-2"
           >
             <div class="row gy-1 px-1 ms-3">
@@ -34,7 +34,7 @@
           </div>
 
           <div
-            *ngIf="msgGroup.user.name !== currentUser"
+            *ngIf="msgGroup.user.name !== currentUser?.name"
             class="d-flex justify-content-start align-items-end p-2"
           >
             <img

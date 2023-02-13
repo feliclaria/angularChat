@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Message, MessageGroup, MessageCluster } from 'src/app/interfaces/message';
+import { UserProfile } from 'src/app/interfaces/user-profile';
 import { mockMessages } from 'src/app/messages-mock';
 
 @Component({
@@ -8,7 +9,7 @@ import { mockMessages } from 'src/app/messages-mock';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  currentUser: string = 'Madeline';
+  @Input() currentUser?: UserProfile = undefined;
   messages: MessageCluster[] = [];
 
   constructor() {}

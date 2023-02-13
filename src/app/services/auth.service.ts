@@ -34,6 +34,8 @@ export class AuthService {
           emailVerified: currentUser.emailVerified
         };
         this.userService.createUser(user);
+        if (user.displayName) sessionStorage.setItem('user-name', user.displayName);
+        if (user.photoURL) sessionStorage.setItem('user-avatar', user.photoURL);
       }
     });
   }
@@ -103,6 +105,7 @@ export class AuthService {
     await signOut(this.auth)
       .then(() => {
         this.router.navigateByUrl('/login');
+        sessionStorage.clear();
       })
       .catch((error) => console.warn(error));
   }
