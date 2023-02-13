@@ -17,6 +17,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { HomeComponent } from './components/home/home.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { TextDividerComponent } from './components/text-divider.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ChatComponent } from './components/chat/chat.component';
     SignUpComponent,
     LogInComponent,
     HomeComponent,
-    ChatComponent
+    ChatComponent,
+    TextDividerComponent
   ],
   imports: [
     BrowserModule,
