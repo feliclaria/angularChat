@@ -59,7 +59,7 @@ export const mockMessages: Message[] = [
   },
   {
     text: '...or replying to your emails.',
-    date: new Date('2024-02-11T13:44:00'),
+    date: new Date('2023-02-11T13:44:00'),
     user: {
       name: 'Madeline',
       avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'

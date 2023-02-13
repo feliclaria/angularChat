@@ -14,12 +14,12 @@
               required
               [ngClass]="{
                 'is-invalid':
-                  formControls.email.touched && (formControls.email.errors || serverErrorMessage)
+                  (formControls.email.errors || serverErrorMessage) && formControls.email.touched
               }"
             />
 
             <div
-              *ngIf="formControls.email.touched && formControls.email.touched"
+              *ngIf="formControls.email.errors && formControls.email.touched"
               class="invalid-feedback"
             >
               <div *ngIf="formControls.email.errors?.['required'] else authServerError">
@@ -40,12 +40,12 @@
               formControlName="password"
               required
               [ngClass]="{
-                'is-invalid': formControls.password.touched && formControls.password.errors
+                'is-invalid': formControls.password.errors && formControls.password.touched
               }"
             />
 
             <div
-              *ngIf="formControls.password.touched && formControls.password.touched"
+              *ngIf="formControls.password.errors && formControls.password.touched"
               class="invalid-feedback"
             >
               <div *ngIf="formControls.password.errors?.['required'] else errorMaxLength">
@@ -73,11 +73,11 @@
               formControlName="confirmPassword"
               required
               [ngClass]="{
-                'is-invalid': signUpForm.errors && (signUpForm.touched || signUpForm.dirty)
+                'is-invalid': signUpForm.errors && signUpForm.touched
               }"
             />
             <div
-              *ngIf="signUpForm.errors?.['passwordsDontMatch'] && (signUpForm.touched || signUpForm.dirty)"
+              *ngIf="signUpForm.errors?.['passwordsDontMatch'] && signUpForm.touched"
               class="invalid-feedback"
             >
               Passwords do not match

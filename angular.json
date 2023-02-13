@@ -82,6 +82,16 @@
             "styles": ["src/styles.css"],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "angularChat:build:production",
+            "firebaseProject": "angularchat-fe304",
+            "firebaseHostingSite": "angularchat-fe304"
+          }
         }
       }
     }

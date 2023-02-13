@@ -15,7 +15,6 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.messages = this.groupMessages(mockMessages);
-    console.log(this.messages);
   }
 
   groupMessagesByDate(messages: Message[]): { date: Date; messages: Message[] }[] {

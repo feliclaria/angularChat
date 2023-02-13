@@ -19,8 +19,8 @@
             <div class="row gy-1 px-1 ms-3">
               <div *ngFor="let msg of msgGroup.messages" class="col-12 d-flex justify-content-end">
                 <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
-                  <p class="text-start text-white my-0 me-2">{{ msg.text }}</p>
-                  <p class="small text-end text-light fw-light my-0 lh-1">
+                  <p class="text-start text-light mb-0 me-2">{{ msg.text }}</p>
+                  <p class="small text-end text-light fw-light mb-0 lh-1 user-select-none">
                     {{ msg.date | date : 'HH:mm' }}
                   </p>
                 </div>
@@ -28,7 +28,7 @@
             </div>
 
             <img
-              class="rounded-circle"
+              class="rounded-circle user-select-none"
               width="40rem"
               [src]="msgGroup.user.avatar"
               [alt]="msgGroup.user.name"
@@ -40,7 +40,7 @@
             class="d-flex justify-content-start align-items-end p-2"
           >
             <img
-              class="rounded-circle"
+              class="rounded-circle user-select-none"
               width="40rem"
               [src]="msgGroup.user.avatar"
               [alt]="msgGroup.user.name"
@@ -49,11 +49,11 @@
             <div class="row gy-1 px-1 me-3">
               <div *ngFor="let msg of msgGroup.messages; index as i" class="col-12">
                 <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
-                  <p class="text-start text-success fw-semibold my-0 me-2">
+                  <p *ngIf="i === 0" class="text-start text-success fw-semibold my-0 me-2">
                     {{ msgGroup.user.name }}
                   </p>
-                  <p class="text-start my-0 me-2">{{ msg.text }}</p>
-                  <p class="small text-end text-muted fw-light my-0 lh-1">
+                  <p class="text-start mb-0 me-2">{{ msg.text }}</p>
+                  <p class="small text-end text-muted fw-light mb-0 lh-1 user-select-none">
                     {{ msg.date | date : 'HH:mm' }}
                   </p>
                 </div>

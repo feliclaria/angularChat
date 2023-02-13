@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angularchat-fe304": {
+      "hosting": {
+        "angularChat": [
+          "angularchat-fe304"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angularchat-fe304"
+  }
+}

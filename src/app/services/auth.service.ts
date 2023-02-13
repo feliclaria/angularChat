@@ -3,13 +3,16 @@ import {
   Auth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { User } from '../interfaces/user';
 import { AuthErrorMessageService } from './auth-error-message.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +21,22 @@ export class AuthService {
   constructor(
     private auth: Auth,
     private router: Router,
+    private userService: UserService,
     private authErrMsgService: AuthErrorMessageService
-  ) {}
+  ) {
+    onAuthStateChanged(this.auth, (currentUser) => {
+      if (currentUser) {
+        const user: User = {
+          uid: currentUser.uid,
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+          emailVerified: currentUser.emailVerified
+        };
+        this.userService.createUser(user);
+      }
+    });
+  }
 
   get serverErrors(): Observable<string> {
     return this.authErrMsgService.errorMessages;
@@ -33,11 +50,8 @@ export class AuthService {
       .catch((error) => {
         console.warn(error);
         switch (error.code) {
-          case 'auth/email-already-in-use':
           case 'auth/invalid-email': {
-            this.authErrMsgService.addErrorMessage(
-              'The email addres is not valid or is already in use'
-            );
+            this.authErrMsgService.addErrorMessage('The email address is invalid');
             break;
           }
           default: {
