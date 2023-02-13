@@ -34,6 +34,7 @@ export class AuthService {
           emailVerified: currentUser.emailVerified
         };
         this.userService.createUser(user);
+        if (user.uid) sessionStorage.setItem('user-uid', user.uid);
         if (user.displayName) sessionStorage.setItem('user-name', user.displayName);
         if (user.photoURL) sessionStorage.setItem('user-avatar', user.photoURL);
       }

@@ -9,12 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HomeComponent {
   currentUser: UserProfile = {
-    name: sessionStorage.getItem('user-display-name')!,
-    avatar: sessionStorage.getItem('user-photo-url')
-  };
-  mockUser: UserProfile = {
-    name: 'Madeline',
-    avatar: 'https://tiermaker.com/images/chart/chart/celeste-icons--603740/mad1png.png'
+    uid: sessionStorage.getItem('user-uid')!,
+    name: sessionStorage.getItem('user-name')!,
+    avatar: sessionStorage.getItem('user-avatar')
   };
 
   constructor(private authService: AuthService) {}
