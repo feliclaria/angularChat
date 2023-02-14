@@ -29,13 +29,14 @@ export class SignUpComponent implements OnInit {
 
   signUpForm = this.fb.group(
     {
+      name: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
       email: ['', [Validators.required]],
       password: [
         '',
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.maxLength(30),
+          Validators.maxLength(50),
           Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/)
         ]
       ],
@@ -52,6 +53,10 @@ export class SignUpComponent implements OnInit {
     });
   }
 
+  get name() {
+    return this.signUpForm.value.name;
+  }
+
   get email() {
     return this.signUpForm.value.email;
   }
@@ -65,7 +70,7 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.signUp(this.email!, this.password!);
+    this.authService.signUp(this.name!, this.email!, this.password!);
   }
 
   onClick() {

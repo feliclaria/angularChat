@@ -7,6 +7,15 @@
         <form class="row gy-2" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
           <div class="col-12">
             <input
+              class="form-control form-control-lg fs-6"
+              placeholder="Username"
+              formControlName="name"
+              required
+            />
+          </div>
+
+          <div class="col-12">
+            <input
               type="text"
               class="form-control form-control-lg fs-6"
               placeholder="Email"
@@ -54,7 +63,7 @@
 
               <ng-template #errorMaxLength>
                 <div *ngIf="formControls.password.errors?.['maxlength'] else errorNotValidPassword">
-                  The password cannot be longer than 30 characters
+                  The password cannot be longer than 50 characters
                 </div>
               </ng-template>
 

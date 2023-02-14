@@ -6,7 +6,8 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut
+  signOut,
+  updateProfile
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -26,6 +27,7 @@ export class AuthService {
   ) {
     onAuthStateChanged(this.auth, (currentUser) => {
       if (currentUser) {
+        console.log(currentUser);
         const user: User = {
           uid: currentUser.uid,
           displayName: currentUser.displayName,
@@ -45,10 +47,15 @@ export class AuthService {
     return this.authErrMsgService.errorMessages;
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(name: string, email: string, password: string) {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then(() => {
-        this.router.navigateByUrl('/home');
+        updateProfile(this.auth.currentUser!, { displayName: name })
+          .then(() => {
+            sessionStorage.setItem('user-name', name);
+            this.router.navigateByUrl('/home');
+          })
+          .catch((error) => console.warn(error));
       })
       .catch((error) => {
         console.warn(error);
