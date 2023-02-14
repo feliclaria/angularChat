@@ -5,6 +5,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AutosizeModule } from 'ngx-autosize';
 import { AppRoutingModule } from './app-routing.module';
+import { AvatarModule } from 'ngx-avatars';
+import { HttpClientModule } from '@angular/common/http';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
@@ -36,6 +38,8 @@ import { TextDividerComponent } from './components/text-divider.component';
     NgbModule,
     ReactiveFormsModule,
     AutosizeModule,
+    AvatarModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())

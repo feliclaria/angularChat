@@ -25,26 +25,25 @@
               </div>
             </div>
 
-            <img
-              class="rounded-circle user-select-none"
-              width="40rem"
-              referrerpolicy="no-referrer"
+            <ngx-avatars
+              class="user-select-none"
               [src]="msgGroup.user.avatar"
-              [alt]="msgGroup.user.name"
-            />
+              [name]="msgGroup.user.name"
+              size="40"
+            >
+            </ngx-avatars>
           </div>
 
           <div
             *ngIf="msgGroup.user.uid !== currentUser.uid"
             class="d-flex justify-content-start align-items-end p-2"
           >
-            <img
-              class="rounded-circle user-select-none"
-              width="40rem"
-              referrerpolicy="no-referrer"
+            <ngx-avatars
+              class="user-select-none"
               [src]="msgGroup.user.avatar"
-              [alt]="msgGroup.user.name"
-            />
+              [name]="msgGroup.user.name"
+              size="40"
+            ></ngx-avatars>
 
             <div class="row gy-1 px-1 me-3">
               <div *ngFor="let msg of msgGroup.messages; index as i" class="col-12">
