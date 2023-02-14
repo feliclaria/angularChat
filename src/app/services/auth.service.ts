@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   async signUp(email: string, password: string) {
-    await createUserWithEmailAndPassword(this.auth, email, password)
+    return createUserWithEmailAndPassword(this.auth, email, password)
       .then(() => {
         this.router.navigateByUrl('/home');
       })
@@ -68,7 +68,7 @@ export class AuthService {
       this.authErrMsgService.addErrorMessage('Wrong email address or password');
       return;
     }
-    await signInWithEmailAndPassword(this.auth, email, password)
+    return signInWithEmailAndPassword(this.auth, email, password)
       .then(() => {
         this.router.navigateByUrl('/home');
         this.authErrMsgService.addEmptyMessage();
@@ -95,7 +95,7 @@ export class AuthService {
   }
 
   async logInWithGoogle() {
-    await signInWithPopup(this.auth, new GoogleAuthProvider())
+    return signInWithPopup(this.auth, new GoogleAuthProvider())
       .then(() => {
         this.router.navigateByUrl('/home');
       })
@@ -103,7 +103,7 @@ export class AuthService {
   }
 
   async logOut() {
-    await signOut(this.auth)
+    return signOut(this.auth)
       .then(() => {
         this.router.navigateByUrl('/login');
         sessionStorage.clear();

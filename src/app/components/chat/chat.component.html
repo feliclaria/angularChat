@@ -11,7 +11,7 @@
 
         <div *ngFor="let msgGroup of msgCluster.messages">
           <div
-            *ngIf="msgGroup.user.uid === currentUser?.uid"
+            *ngIf="msgGroup.user.uid === currentUser.uid"
             class="d-flex justify-content-end align-items-end p-2"
           >
             <div class="row gy-1 px-1 ms-3">
@@ -28,18 +28,20 @@
             <img
               class="rounded-circle user-select-none"
               width="40rem"
+              referrerpolicy="no-referrer"
               [src]="msgGroup.user.avatar"
               [alt]="msgGroup.user.name"
             />
           </div>
 
           <div
-            *ngIf="msgGroup.user.uid !== currentUser?.uid"
+            *ngIf="msgGroup.user.uid !== currentUser.uid"
             class="d-flex justify-content-start align-items-end p-2"
           >
             <img
               class="rounded-circle user-select-none"
               width="40rem"
+              referrerpolicy="no-referrer"
               [src]="msgGroup.user.avatar"
               [alt]="msgGroup.user.name"
             />
@@ -63,15 +65,21 @@
     </div>
   </div>
 
-  <form class="card-footer text-muted d-flex align-items-end p-2">
+  <form
+    class="card-footer text-muted d-flex align-items-end p-2"
+    [formGroup]="msgForm"
+    (ngSubmit)="onSubmit()"
+  >
     <textarea
-      autosize
       class="form-control"
-      [maxRows]="4"
+      placeholder="Write a message..."
       rows="1"
-      placeholder="Type message..."
+      [maxRows]="4"
+      (keydown.enter)="onSubmit(); (false)"
+      formControlName="messageContent"
+      autosize
     ></textarea>
-    <button type="submit" class="btn btn-primary ms-2">
+    <button type="submit" class="btn btn-primary ms-2" [disabled]="!msgForm.valid">
       <i class="bi bi-send"></i>
     </button>
   </form>

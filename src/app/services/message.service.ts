@@ -36,9 +36,9 @@ export class MessageService {
     ) as Observable<Message[]>;
   }
 
-  sendMessage(message: Message) {
+  async sendMessage(message: Message) {
     const ref = collection(this.firestore, 'messages');
-    addDoc(ref, message);
+    return addDoc(ref, message);
   }
 
   groupMessages(messages: Message[]): MessageStream[] {
