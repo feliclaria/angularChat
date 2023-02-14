@@ -25,8 +25,7 @@ export class MessageService {
       limitToLast(100)
     );
 
-    const messages = collectionData(ref);
-    return messages.pipe(
+    return collectionData(ref).pipe(
       map((xs) => {
         xs.map((x) => {
           x['date'] = x['date'].toDate();

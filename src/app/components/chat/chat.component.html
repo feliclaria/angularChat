@@ -6,7 +6,7 @@
 
   <div class="card-body d-flex flex-column-reverse overflow-y-scroll">
     <div>
-      <div *ngFor="let msgCluster of messages">
+      <div *ngFor="let msgCluster of messages$ | async">
         <app-text-divider [content]="msgCluster.date | date" />
 
         <div *ngFor="let msgGroup of msgCluster.messages">
