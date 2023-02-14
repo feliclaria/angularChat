@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Message, MessageStream } from 'src/app/interfaces/message';
 import { User } from 'src/app/interfaces/user';
 import { UserProfile } from 'src/app/interfaces/user-profile';
@@ -16,8 +16,7 @@ export class ChatComponent implements OnInit {
   @Input() user!: User | null;
 
   messages$!: Observable<MessageStream[]>;
-
-  // users$!: Observable<UserProfile[]>;
+  users$!: Observable<Map<string, UserProfile>>;
 
   msgForm = this.formBuilder.group({
     messageContent: ['', [Validators.required]]
@@ -33,8 +32,7 @@ export class ChatComponent implements OnInit {
     this.messages$ = this.messageService
       .getMessages()
       .pipe(map((msgs) => this.messageService.groupMessages(msgs)));
-
-    // this.users$ = this.messageService.getUsers();
+    this.users$ = this.messageService.getUsers();
   }
 
   onSubmit() {

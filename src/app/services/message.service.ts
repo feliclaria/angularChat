@@ -8,7 +8,7 @@ import {
   collectionData,
   addDoc
 } from '@angular/fire/firestore';
-import { from, Observable, of, switchMap } from 'rxjs';
+import { from, Observable, map } from 'rxjs';
 
 import { DateMessages, Message, MessageStream, UserMessages } from '../interfaces/message';
 import { UserProfile } from '../interfaces/user-profile';
@@ -19,16 +19,21 @@ import { UserProfile } from '../interfaces/user-profile';
 export class MessageService {
   constructor(private firestore: Firestore) {}
 
-  getUsers(): Observable<UserProfile[]> {
+  getUsers(): Observable<Map<string, UserProfile>> {
     const ref = collection(this.firestore, 'users');
     return collectionData(ref).pipe(
-      switchMap((users) =>
-        of(
-          users.map((user) => {
-            return { uid: user['uid'], name: user['name'], avatar: user['avatar'] };
-          })
-        )
-      )
+      map((users) => {
+        const userProfiles = new Map<string, UserProfile>();
+        users.forEach((user) => {
+          const profile: UserProfile = {
+            uid: user['uid'],
+            name: user['displayName'],
+            avatar: user['photoURL']
+          };
+          userProfiles.set(profile.uid, profile);
+        });
+        return userProfiles;
+      })
     );
   }
 
@@ -40,13 +45,11 @@ export class MessageService {
     );
 
     return collectionData(ref).pipe(
-      switchMap((messages) =>
-        of(
-          messages.map((msg) => {
-            msg['date'] = msg['date'].toDate();
-            return msg;
-          })
-        )
+      map((messages) =>
+        messages.map((msg) => {
+          msg['date'] = msg['date'].toDate();
+          return msg;
+        })
       )
     ) as Observable<Message[]>;
   }
