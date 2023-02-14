@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -24,9 +24,7 @@ const passwordsDontMatchValidator: ValidatorFn = (
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-export class SignUpComponent implements OnInit {
-  serverErrorMessage: string = '';
-
+export class SignUpComponent {
   signUpForm = this.fb.group(
     {
       name: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
@@ -47,12 +45,6 @@ export class SignUpComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
-  ngOnInit() {
-    this.authService.serverErrors.subscribe((message) => {
-      this.serverErrorMessage = message;
-    });
-  }
-
   get name() {
     return this.signUpForm.value.name;
   }
@@ -70,10 +62,10 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.signUp(this.name!, this.email!, this.password!);
+    this.authService.signUp(this.name!, this.email!, this.password!).subscribe();
   }
 
   onClick() {
-    this.authService.logInWithGoogle();
+    this.authService.logInWithGoogle().subscribe();
   }
 }

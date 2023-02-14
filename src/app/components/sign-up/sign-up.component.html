@@ -22,8 +22,7 @@
               formControlName="email"
               required
               [ngClass]="{
-                'is-invalid':
-                  (formControls.email.errors || serverErrorMessage) && formControls.email.touched
+                'is-invalid': formControls.email.errors && formControls.email.touched
               }"
             />
 
@@ -31,13 +30,7 @@
               *ngIf="formControls.email.errors && formControls.email.touched"
               class="invalid-feedback"
             >
-              <div *ngIf="formControls.email.errors?.['required'] else authServerError">
-                Email is required
-              </div>
-
-              <ng-template #authServerError>
-                {{ serverErrorMessage }}
-              </ng-template>
+              <div *ngIf="formControls.email.errors?.['required']">Email is required</div>
             </div>
           </div>
 

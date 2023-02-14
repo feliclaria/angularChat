@@ -11,7 +11,7 @@
 
         <div *ngFor="let msgGroup of msgCluster.messages">
           <div
-            *ngIf="msgGroup.user.uid === currentUser.uid"
+            *ngIf="msgGroup.uid === user?.uid"
             class="d-flex justify-content-end align-items-end p-2"
           >
             <div class="row gy-1 px-1 ms-3">
@@ -25,33 +25,32 @@
               </div>
             </div>
 
-            <ngx-avatars
+            <!-- <ngx-avatars
               class="user-select-none"
               [src]="msgGroup.user.avatar"
               [name]="msgGroup.user.name"
               [textSizeRatio]="2.5"
               size="40"
-            >
-            </ngx-avatars>
+            </ngx-avatars> -->
           </div>
 
           <div
-            *ngIf="msgGroup.user.uid !== currentUser.uid"
+            *ngIf="msgGroup.uid !== user?.uid"
             class="d-flex justify-content-start align-items-end p-2"
           >
-            <ngx-avatars
+            <!-- <ngx-avatars
               class="user-select-none"
               [src]="msgGroup.user.avatar"
               [name]="msgGroup.user.name"
               [textSizeRatio]="2.5"
               size="40"
-            ></ngx-avatars>
+            ></ngx-avatars> -->
 
             <div class="row gy-1 px-1 me-3">
               <div *ngFor="let msg of msgGroup.messages; index as i" class="col-12">
                 <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
                   <p *ngIf="i === 0" class="text-start text-success fw-semibold my-0 me-2">
-                    {{ msgGroup.user.name }}
+                    {{ msgGroup.uid }}
                   </p>
                   <p class="text-start mb-0 me-2">{{ msg.text }}</p>
                   <p class="small text-end text-muted fw-light mb-0 lh-1 user-select-none">

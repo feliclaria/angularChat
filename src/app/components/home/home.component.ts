@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserProfile } from 'src/app/interfaces/user-profile';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,15 +7,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  currentUser: UserProfile = {
-    uid: sessionStorage.getItem('user-uid')!,
-    name: sessionStorage.getItem('user-name')!,
-    avatar: sessionStorage.getItem('user-avatar')
-  };
-
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   onClick() {
-    this.authService.logOut();
+    this.authService.logOut().subscribe();
   }
 }

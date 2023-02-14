@@ -8,9 +8,10 @@ import {
   collectionData,
   addDoc
 } from '@angular/fire/firestore';
-import { map, Observable } from 'rxjs';
+import { from, Observable, of, switchMap } from 'rxjs';
 
 import { DateMessages, Message, MessageStream, UserMessages } from '../interfaces/message';
+import { UserProfile } from '../interfaces/user-profile';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,20 @@ import { DateMessages, Message, MessageStream, UserMessages } from '../interface
 export class MessageService {
   constructor(private firestore: Firestore) {}
 
-  getMessages() {
+  getUsers(): Observable<UserProfile[]> {
+    const ref = collection(this.firestore, 'users');
+    return collectionData(ref).pipe(
+      switchMap((users) =>
+        of(
+          users.map((user) => {
+            return { uid: user['uid'], name: user['name'], avatar: user['avatar'] };
+          })
+        )
+      )
+    );
+  }
+
+  getMessages(): Observable<Message[]> {
     const ref = query(
       collection(this.firestore, 'messages'),
       orderBy('date', 'asc'),
@@ -26,19 +40,20 @@ export class MessageService {
     );
 
     return collectionData(ref).pipe(
-      map((xs) => {
-        xs.map((x) => {
-          x['date'] = x['date'].toDate();
-          return x;
-        });
-        return xs;
-      })
+      switchMap((messages) =>
+        of(
+          messages.map((msg) => {
+            msg['date'] = msg['date'].toDate();
+            return msg;
+          })
+        )
+      )
     ) as Observable<Message[]>;
   }
 
-  async sendMessage(message: Message) {
+  sendMessage(message: Message) {
     const ref = collection(this.firestore, 'messages');
-    return addDoc(ref, message);
+    return from(addDoc(ref, message));
   }
 
   groupMessages(messages: Message[]): MessageStream[] {
@@ -82,15 +97,15 @@ export class MessageService {
   private groupMessagesByUser(messages: Message[]): UserMessages[] {
     return messages.reduce((acc: UserMessages[], msg: Message): UserMessages[] => {
       const prev = acc.pop();
-      if (prev?.user.name === msg.user.name) {
+      if (prev?.uid === msg.uid) {
         prev.messages.push({ text: msg.text, date: msg.date });
         acc.push(prev);
       } else if (prev) {
-        const next = { user: msg.user, messages: [{ text: msg.text, date: msg.date }] };
+        const next = { uid: msg.uid, messages: [{ text: msg.text, date: msg.date }] };
         acc.push(prev);
         acc.push(next);
       } else {
-        const next = { user: msg.user, messages: [{ text: msg.text, date: msg.date }] };
+        const next = { uid: msg.uid, messages: [{ text: msg.text, date: msg.date }] };
         acc.push(next);
       }
       return acc;

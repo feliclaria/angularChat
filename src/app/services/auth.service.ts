@@ -1,120 +1,74 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
+  authState,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut,
-  updateProfile
+  signOut
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { from, Observable, of, switchMap, tap } from 'rxjs';
 import { User } from '../interfaces/user';
-import { AuthErrorMessageService } from './auth-error-message.service';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(
-    private auth: Auth,
-    private router: Router,
-    private userService: UserService,
-    private authErrMsgService: AuthErrorMessageService
-  ) {
-    onAuthStateChanged(this.auth, (currentUser) => {
-      if (currentUser) {
-        console.log(currentUser);
-        const user: User = {
-          uid: currentUser.uid,
-          displayName: currentUser.displayName,
-          email: currentUser.email,
-          photoURL: currentUser.photoURL,
-          emailVerified: currentUser.emailVerified
+  user$!: Observable<User | null>;
+
+  constructor(private auth: Auth, private router: Router, private userService: UserService) {
+    this.user$ = authState(this.auth).pipe(
+      switchMap((user) => {
+        if (user) return userService.getUser(user);
+        else return of(null);
+      })
+    );
+  }
+
+  signUp(name: string, email: string, password: string) {
+    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
+      switchMap((credential) => {
+        const user = credential.user;
+        const newUser: User = {
+          uid: user.uid,
+          displayName: name,
+          email: user.email,
+          photoURL: user.photoURL,
+          emailVerified: user.emailVerified
         };
-        this.userService.createUser(user);
-        if (user.uid) sessionStorage.setItem('user-uid', user.uid);
-        if (user.displayName) sessionStorage.setItem('user-name', user.displayName);
-        if (user.photoURL) sessionStorage.setItem('user-avatar', user.photoURL);
-      }
-    });
+        return this.userService.updateUser(newUser);
+      }),
+      tap(() => this.router.navigateByUrl('/home'))
+    );
   }
 
-  get serverErrors(): Observable<string> {
-    return this.authErrMsgService.errorMessages;
+  logIn(email: string, password: string) {
+    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
+      tap(() => this.router.navigateByUrl('/home'))
+    );
   }
 
-  async signUp(name: string, email: string, password: string) {
-    return createUserWithEmailAndPassword(this.auth, email, password)
-      .then(() => {
-        updateProfile(this.auth.currentUser!, { displayName: name })
-          .then(() => {
-            sessionStorage.setItem('user-name', name);
-            this.router.navigateByUrl('/home');
-          })
-          .catch((error) => console.warn(error));
-      })
-      .catch((error) => {
-        console.warn(error);
-        switch (error.code) {
-          case 'auth/invalid-email': {
-            this.authErrMsgService.addErrorMessage('The email address is invalid');
-            break;
-          }
-          default: {
-          }
-        }
-      });
+  logInWithGoogle() {
+    return from(signInWithPopup(this.auth, new GoogleAuthProvider())).pipe(
+      switchMap((credential) => {
+        const user = credential.user;
+        const newUser: User = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          emailVerified: user.emailVerified
+        };
+        return this.userService.updateUser(newUser);
+      }),
+      tap(() => this.router.navigateByUrl('/home'))
+    );
   }
 
-  async logIn(email: string | null | undefined, password: string | null | undefined) {
-    if (!email || !password) {
-      this.authErrMsgService.addErrorMessage('Wrong email address or password');
-      return;
-    }
-    return signInWithEmailAndPassword(this.auth, email, password)
-      .then(() => {
-        this.router.navigateByUrl('/home');
-        this.authErrMsgService.addEmptyMessage();
-      })
-      .catch((error) => {
-        console.warn(error);
-        switch (error.code) {
-          case 'auth/invalid-email':
-          case 'auth/wrong-password':
-          case 'auth/user-not-found': {
-            this.authErrMsgService.addErrorMessage('Wrong email address or password');
-            break;
-          }
-          case 'auth/too-many-requests': {
-            this.authErrMsgService.addErrorMessage('Too many attempts. Try again later.');
-            break;
-          }
-          default: {
-            this.authErrMsgService.addEmptyMessage();
-            break;
-          }
-        }
-      });
-  }
-
-  async logInWithGoogle() {
-    return signInWithPopup(this.auth, new GoogleAuthProvider())
-      .then(() => {
-        this.router.navigateByUrl('/home');
-      })
-      .catch((error) => console.warn(error));
-  }
-
-  async logOut() {
-    return signOut(this.auth)
-      .then(() => {
-        this.router.navigateByUrl('/login');
-        sessionStorage.clear();
-      })
-      .catch((error) => console.warn(error));
+  logOut() {
+    return from(signOut(this.auth)).pipe(tap(() => this.router.navigateByUrl('/login')));
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { deleteDoc, doc, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { deleteDoc, doc, Firestore, setDoc, updateDoc, docData } from '@angular/fire/firestore';
+import { from, Observable } from 'rxjs';
 import { User } from '../interfaces/user';
 
 @Injectable({
@@ -8,18 +9,18 @@ import { User } from '../interfaces/user';
 export class UserService {
   constructor(private firestore: Firestore) {}
 
-  async createUser(user: User) {
+  getUser(user: User): Observable<User> {
     const ref = doc(this.firestore, 'users', user.uid);
-    await setDoc(ref, user, { merge: true }).catch((error) => console.warn(error));
+    return docData(ref) as Observable<User>;
   }
 
-  async updateUser(user: User) {
+  updateUser(user: User) {
     const ref = doc(this.firestore, 'users', user.uid);
-    await updateDoc(ref, { ...user }).catch((error) => console.warn(error));
+    return from(setDoc(ref, user, { merge: true }));
   }
 
-  async deleteUser(user: User) {
+  deleteUser(user: User) {
     const ref = doc(this.firestore, 'users', user.uid);
-    await deleteDoc(ref).catch((error) => console.warn(error));
+    return from(deleteDoc(ref));
   }
 }

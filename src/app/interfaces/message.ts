@@ -1,13 +1,11 @@
-import { UserProfile } from './user-profile';
-
 export interface Message {
   text: string;
   date: Date;
-  user: UserProfile;
+  uid: string;
 }
 
 export interface UserMessages {
-  user: UserProfile;
+  uid: string;
   messages: { text: string; date: Date }[];
 }
 
