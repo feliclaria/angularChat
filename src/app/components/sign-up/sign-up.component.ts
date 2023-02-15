@@ -45,24 +45,18 @@ export class SignUpComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
-  get name() {
-    return this.signUpForm.value.name;
-  }
-
-  get email() {
-    return this.signUpForm.value.email;
-  }
-
-  get password() {
-    return this.signUpForm.value.password;
-  }
-
   get formControls() {
     return this.signUpForm.controls;
   }
 
   onSubmit() {
-    this.authService.signUp(this.name!, this.email!, this.password!).subscribe();
+    this.authService
+      .signUp(
+        this.signUpForm.value.name!,
+        this.signUpForm.value.email!,
+        this.signUpForm.value.password!
+      )
+      .subscribe();
   }
 
   onClick() {

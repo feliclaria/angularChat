@@ -4,7 +4,7 @@
       <div class="card-body">
         <h3 class="card-title text-center fw-semibold my-3">Log in</h3>
 
-        <form class="row gy-2" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+        <form class="row gy-2" [formGroup]="logInForm" (ngSubmit)="onSubmitLogInForm()">
           <div class="col-12">
             <input
               type="text"
@@ -12,7 +12,9 @@
               placeholder="Email"
               formControlName="email"
               [ngClass]="{
-                'is-invalid': formControls.email.touched
+                'is-invalid':
+                  (logInForm.get('email')?.touched && logInForm.get('email')?.errors) ||
+                  (logInForm.touched && logInForm.hasError('invalidCredentials'))
               }"
             />
           </div>
@@ -24,9 +26,17 @@
               placeholder="Password"
               formControlName="password"
               [ngClass]="{
-                'is-invalid': formControls.password.touched
+                'is-invalid':
+                  (logInForm.get('password')?.touched && logInForm.get('password')?.errors) ||
+                  (logInForm.touched && logInForm.hasError('invalidCredentials'))
               }"
             />
+            <div
+              *ngIf="logInForm.touched && logInForm.hasError('invalidCredentials')"
+              class="invalid-feedback"
+            >
+              The email or password you entered is incorrect. Please try again.
+            </div>
           </div>
 
           <div class="d-grid">
@@ -42,7 +52,7 @@
           <button
             type="button"
             class="btn btn-outline-danger position-relative"
-            (click)="onClick()"
+            (click)="onClickLogInWithGoogle()"
           >
             <i class="float-start bi bi-google"></i>
             <div class="position-absolute top-50 start-50 translate-middle">Log in with Google</div>
