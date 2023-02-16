@@ -18,12 +18,12 @@ export class ChatComponent implements OnInit {
   messages$!: Observable<MessageStream[]>;
   users$!: Observable<Map<string, UserProfile>>;
 
-  msgForm = this.formBuilder.group({
+  msgForm = this.fb.group({
     messageContent: ['', [Validators.required]]
   });
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private messageService: MessageService,
     public userService: UserService
   ) {}

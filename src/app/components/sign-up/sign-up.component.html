@@ -8,6 +8,7 @@
           <div class="col-12 input-group">
             <span class="input-group-text" id="at-addon">@</span>
             <input
+              type="text"
               class="form-control form-control-lg fs-6 has-validation"
               placeholder="Username"
               formControlName="name"
@@ -38,7 +39,7 @@
 
           <div class="col-12">
             <input
-              type="text"
+              type="email"
               class="form-control form-control-lg fs-6"
               placeholder="Email"
               formControlName="email"
@@ -105,7 +106,7 @@
                     else passwordsDontMatch
                   "
                 >
-                  Passwords must have at least 8 characters and contain all of the following:
+                  The password must have at least 8 characters and contain all of the following:
                   lowercase letters, upercase letters, and numbers.
                 </div>
               </ng-template>

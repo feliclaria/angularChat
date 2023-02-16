@@ -7,14 +7,12 @@
         <form class="row gy-2" [formGroup]="logInForm" (ngSubmit)="onSubmitLogInForm()">
           <div class="col-12">
             <input
-              type="text"
+              type="email"
               class="form-control form-control-lg fs-6"
               placeholder="Email"
               formControlName="email"
               [ngClass]="{
-                'is-invalid':
-                  (logInForm.get('email')?.touched && logInForm.get('email')?.errors) ||
-                  (logInForm.touched && logInForm.hasError('invalidCredentials'))
+                'is-invalid': logInForm.hasError('invalidCredentials')
               }"
             />
           </div>
@@ -26,23 +24,16 @@
               placeholder="Password"
               formControlName="password"
               [ngClass]="{
-                'is-invalid':
-                  (logInForm.get('password')?.touched && logInForm.get('password')?.errors) ||
-                  (logInForm.touched && logInForm.hasError('invalidCredentials'))
+                'is-invalid': logInForm.hasError('invalidCredentials')
               }"
             />
-            <div
-              *ngIf="logInForm.touched && logInForm.hasError('invalidCredentials')"
-              class="invalid-feedback"
-            >
-              The email or password you entered is incorrect. Please try again.
+            <div *ngIf="logInForm.hasError('invalidCredentials')" class="invalid-feedback">
+              The email address or the password you entered is incorrect. Please try again.
             </div>
           </div>
 
           <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg" [disabled]="!logInForm.valid">
-              Log in
-            </button>
+            <button type="submit" class="btn btn-primary btn-lg">Log in</button>
           </div>
         </form>
 
