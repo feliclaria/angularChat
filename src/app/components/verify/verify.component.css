@@ -1,0 +1,26 @@
+::ng-deep ngx-intl-tel-input .iti {
+  width: 100% !important;
+}
+
+::ng-deep ngx-intl-tel-input .iti__flag-container {
+  right: 0 !important;
+}
+
+::ng-deep ngx-intl-tel-input .iti--allow-dropdown input {
+  width: 100%;
+}
+
+::ng-deep ngx-intl-tel-input .country-dropdown {
+  width: 100% !important;
+}
+
+::ng-deep ngx-intl-tel-input .iti__country-list {
+  width: 100%;
+}
+
+/* To prevent name overflowing for long countries and small widths: */
+::ng-deep ngx-intl-tel-input .iti__country-name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

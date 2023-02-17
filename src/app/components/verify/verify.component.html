@@ -1,1 +1,84 @@
-<p>verify works!</p>
+<div class="container">
+  <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title text-center fw-semibold my-3">Verify your account</h3>
+
+        <div *ngIf="currentForm === 'phoneNumber'">
+          <p class="text-center fw-light">
+            Please enter your phone number to verify your account. You will recieve an SMS with a
+            verification code.
+          </p>
+
+          <form class="row gy-2" [formGroup]="phoneNumberForm" (ngSubmit)="onSendCodeSubmit()">
+            <div class="col-12">
+              <ngx-intl-tel-input
+                cssClass="form-control form-control-lg fs-6"
+                [searchCountryFlag]="true"
+                [selectedCountryISO]="ArgISO"
+                [separateDialCode]="true"
+                formControlName="phone"
+              ></ngx-intl-tel-input>
+            </div>
+
+            <div class="d-grid">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                [disabled]="!phoneNumberForm.valid"
+              >
+                Send code
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div *ngIf="currentForm === 'verificationCode'">
+          <p class="text-center fw-light">
+            An SMS with a 6-digit verification code has been sent to
+            {{ this.phoneNumber }}.
+          </p>
+          <form
+            class="row gy-2"
+            [formGroup]="verificationCodeForm"
+            (ngSubmit)="onValidateCodeSubmit()"
+          >
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control form-control-lg fs-6"
+                placeholder="Verification code"
+                formControlName="code"
+              />
+            </div>
+
+            <div class="d-grid">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                [disabled]="!verificationCodeForm.valid"
+              >
+                Confirm
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div *ngIf="currentForm === 'verificationCode'" class="card-footer">
+        <p *ngIf="!resendOn" class="card-text fw-light">
+          Resend code in {{ resendTimer$ | async | date : 'mm:ss' }}
+        </p>
+        <a
+          *ngIf="resendOn"
+          href="#"
+          onclick="return false;"
+          class="card-text fw-light link-primary"
+          (click)="onResendCodeClick()"
+        >
+          Resend code
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

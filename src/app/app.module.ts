@@ -7,6 +7,8 @@ import { AutosizeModule } from 'ngx-autosize';
 import { AppRoutingModule } from './app-routing.module';
 import { AvatarModule } from 'ngx-avatars';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxIntlTelInputModule } from '@capgo/ngx-intl-tel-input';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
@@ -40,6 +42,8 @@ import { TextDividerComponent } from './components/text-divider.component';
     AutosizeModule,
     AvatarModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NgxIntlTelInputModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
