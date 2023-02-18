@@ -10,7 +10,7 @@
             verification code.
           </p>
 
-          <form class="row gy-2" [formGroup]="phoneNumberForm" (ngSubmit)="onSendCodeSubmit()">
+          <form class="row gy-2" [formGroup]="phoneNumberForm">
             <div class="col-12">
               <ngx-intl-tel-input
                 cssClass="form-control form-control-lg fs-6"
@@ -23,6 +23,7 @@
 
             <div class="d-grid">
               <button
+                id="send-code-button"
                 type="submit"
                 class="btn btn-primary btn-lg"
                 [disabled]="!phoneNumberForm.valid"
@@ -63,21 +64,6 @@
             </div>
           </form>
         </div>
-      </div>
-
-      <div *ngIf="currentForm === 'verificationCode'" class="card-footer">
-        <p *ngIf="!resendOn" class="card-text fw-light">
-          Resend code in {{ resendTimer$ | async | date : 'mm:ss' }}
-        </p>
-        <a
-          *ngIf="resendOn"
-          href="#"
-          onclick="return false;"
-          class="card-text fw-light link-primary"
-          (click)="onResendCodeClick()"
-        >
-          Resend code
-        </a>
       </div>
     </div>
   </div>

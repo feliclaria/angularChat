@@ -1,21 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
+import { getAuth, RecaptchaVerifier } from '@angular/fire/auth';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CountryISO } from '@capgo/ngx-intl-tel-input';
-import { finalize, map, Observable, takeWhile, timer } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
   styleUrls: ['./verify.component.css']
 })
-export class VerifyComponent {
+export class VerifyComponent implements AfterViewInit {
   ArgISO = CountryISO.Argentina;
 
   currentForm = 'phoneNumber';
 
-  resendOn = false;
-
-  resendTimer$!: Observable<Date>;
+  recaptchaVerifier: RecaptchaVerifier | undefined;
 
   phoneNumberForm = this.formBuilder.group({
     phone: [undefined, [Validators.required]]
@@ -28,12 +27,27 @@ export class VerifyComponent {
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(6),
-        Validators.pattern(/\d/)
+        Validators.pattern('[0-9]*')
       ]
     ]
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
+
+  ngAfterViewInit() {
+    this.recaptchaVerifier = new RecaptchaVerifier(
+      'send-code-button',
+      {
+        'size': 'invisible',
+        'callback': () => {
+          this.onSendCodeSubmit();
+        },
+        'expired-callback': () => {}
+      },
+      getAuth()
+    );
+    this.recaptchaVerifier.render();
+  }
 
   get phoneNumber(): string {
     if (!this.phoneNumberForm.value.phone) return '';
@@ -47,26 +61,19 @@ export class VerifyComponent {
     );
   }
 
-  startTimer() {
-    this.resendTimer$ = timer(0, 1000).pipe(
-      map((value) => 3 - value),
-      takeWhile((value) => value > 0),
-      map((value) => new Date(1000 * value)),
-      finalize(() => (this.resendOn = true))
-    );
-  }
-
   onSendCodeSubmit() {
-    this.startTimer();
-    this.currentForm = 'verificationCode';
+    const appVerifier = this.recaptchaVerifier!;
+    const phoneNumber: string = this.phoneNumberForm.value.phone!['e164Number'];
+    console.log(appVerifier);
+    console.log(phoneNumber);
+    this.authService.sendVerificationCode(phoneNumber, appVerifier).subscribe(() => {
+      this.currentForm = 'verificationCode';
+    });
   }
 
   onValidateCodeSubmit() {
-    console.log('Verified');
-  }
-
-  onResendCodeClick() {
-    this.startTimer();
-    this.resendOn = false;
+    this.authService.validatePhoneNumber(this.verificationCodeForm.value.code!).subscribe(() => {
+      this.currentForm = 'verifySuccess';
+    });
   }
 }

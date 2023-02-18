@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
+  ApplicationVerifier,
   Auth,
   authState,
+  ConfirmationResult,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  linkWithPhoneNumber,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut
@@ -19,6 +22,8 @@ import { UserService } from './user.service';
 export class AuthService {
   user$!: Observable<User | null>;
 
+  confirmationResult: ConfirmationResult | undefined = undefined;
+
   constructor(private auth: Auth, private router: Router, private userService: UserService) {
     this.user$ = authState(this.auth).pipe(
       switchMap((user) => {
@@ -30,17 +35,6 @@ export class AuthService {
 
   signUp(name: string, email: string, password: string) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
-      switchMap((credential) => {
-        const user = credential.user;
-        const newUser: User = {
-          uid: user.uid,
-          displayName: name,
-          email: user.email,
-          photoURL: user.photoURL,
-          emailVerified: user.emailVerified
-        };
-        return this.userService.updateUser(newUser);
-      }),
       tap(() => this.router.navigateByUrl('/home'))
     );
   }
@@ -53,6 +47,20 @@ export class AuthService {
 
   logInWithGoogle() {
     return from(signInWithPopup(this.auth, new GoogleAuthProvider())).pipe(
+      tap(() => this.router.navigateByUrl('/home'))
+    );
+  }
+
+  sendVerificationCode(phoneNumber: string, appVerifier: ApplicationVerifier) {
+    return from(linkWithPhoneNumber(this.auth.currentUser!, phoneNumber, appVerifier)).pipe(
+      tap((confirmationResult) => {
+        this.confirmationResult = confirmationResult;
+      })
+    );
+  }
+
+  validatePhoneNumber(verificationCode: string) {
+    return from(this.confirmationResult!.confirm(verificationCode)).pipe(
       switchMap((credential) => {
         const user = credential.user;
         const newUser: User = {
@@ -64,7 +72,9 @@ export class AuthService {
         };
         return this.userService.updateUser(newUser);
       }),
-      tap(() => this.router.navigateByUrl('/home'))
+      tap(() => {
+        this.router.navigateByUrl('/home');
+      })
     );
   }
 
