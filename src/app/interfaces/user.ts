@@ -1,7 +1,7 @@
 export interface User {
+  displayName?: string;
+  email?: string;
+  phoneNumber?: string;
+  photoURL?: string;
   uid: string;
-  displayName?: string | null;
-  email?: string | null;
-  photoURL?: string | null;
-  emailVerified?: boolean | null;
 }

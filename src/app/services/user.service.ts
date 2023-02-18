@@ -9,18 +9,18 @@ import { User } from '../interfaces/user';
 export class UserService {
   constructor(private firestore: Firestore) {}
 
-  getUser(user: User): Observable<User> {
-    const ref = doc(this.firestore, 'users', user.uid);
+  getUser(uid: string): Observable<User> {
+    const ref = doc(this.firestore, 'users', uid);
     return docData(ref) as Observable<User>;
   }
 
-  updateUser(user: User) {
+  setUser(user: User): Observable<void> {
     const ref = doc(this.firestore, 'users', user.uid);
     return from(setDoc(ref, user, { merge: true }));
   }
 
-  deleteUser(user: User) {
-    const ref = doc(this.firestore, 'users', user.uid);
+  deleteUser(uid: string): Observable<void> {
+    const ref = doc(this.firestore, 'users', uid);
     return from(deleteDoc(ref));
   }
 }

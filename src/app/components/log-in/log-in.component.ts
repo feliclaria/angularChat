@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { catchError, of } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -9,12 +9,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent {
-  logInForm = this.fb.group({
+  logInForm = this.formBuilder.group({
     email: [''],
     password: ['']
   });
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
 
   onSubmitLogInForm() {
     if (!this.logInForm.value.email || !this.logInForm.value.password) {

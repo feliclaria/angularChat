@@ -4,9 +4,9 @@
     <p class="small text-muted mb-0">2 members</p>
   </div>
 
-  <div class="card-body d-flex flex-column-reverse overflow-y-scroll">
+  <div class="card-body d-flex flex-column-reverse overflow-scroll">
     <div>
-      <div *ngFor="let msgCluster of messages$ | async">
+      <div *ngFor="let msgCluster of messages">
         <app-text-divider [content]="msgCluster.date | date" />
 
         <div *ngFor="let msgGroup of msgCluster.messages">
@@ -42,8 +42,8 @@
           >
             <ngx-avatars
               class="user-select-none"
-              [src]="(users$ | async)?.get(msgGroup.uid)?.avatar"
-              [name]="(users$ | async)?.get(msgGroup.uid)?.name"
+              [src]="profiles.get(msgGroup.uid)?.avatar"
+              [name]="profiles.get(msgGroup.uid)?.name"
               [textSizeRatio]="2.5"
               referrerpolicy="no-referrer"
               size="40"
@@ -53,7 +53,7 @@
               <div *ngFor="let msg of msgGroup.messages; index as i" class="col-12">
                 <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
                   <p *ngIf="i === 0" class="text-start text-success fw-semibold my-0 me-2">
-                    {{ (users$ | async)?.get(msgGroup.uid)?.name }}
+                    {{ profiles.get(msgGroup.uid)?.name }}
                   </p>
                   <p class="text-start mb-0 me-2">{{ msg.text }}</p>
                   <p class="small text-end text-muted fw-light mb-0 lh-1 user-select-none">

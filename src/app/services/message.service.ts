@@ -8,34 +8,17 @@ import {
   collectionData,
   addDoc
 } from '@angular/fire/firestore';
-import { from, Observable, map } from 'rxjs';
+import { from, Observable, map, combineLatest, of } from 'rxjs';
 
 import { DateMessages, Message, MessageStream, UserMessages } from '../interfaces/message';
 import { UserProfile } from '../interfaces/user-profile';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  constructor(private firestore: Firestore) {}
-
-  getUsers(): Observable<Map<string, UserProfile>> {
-    const ref = collection(this.firestore, 'users');
-    return collectionData(ref).pipe(
-      map((users) => {
-        const userProfiles = new Map<string, UserProfile>();
-        users.forEach((user) => {
-          const profile: UserProfile = {
-            uid: user['uid'],
-            name: user['displayName'],
-            avatar: user['photoURL']
-          };
-          userProfiles.set(profile.uid, profile);
-        });
-        return userProfiles;
-      })
-    );
-  }
+  constructor(private firestore: Firestore, private userService: UserService) {}
 
   getMessages(): Observable<Message[]> {
     const ref = query(
@@ -52,6 +35,29 @@ export class MessageService {
         })
       )
     ) as Observable<Message[]>;
+  }
+
+  getProfilesFromMessages(msgs: Message[]): Observable<Map<string, UserProfile>> {
+    const uids = [...new Set(msgs.map((msg) => msg.uid))];
+    const users = uids.map((uid) => this.userService.getUser(uid));
+    const users$ = users.length ? combineLatest(users) : of([]);
+
+    return users$.pipe(
+      map((users) => {
+        const profiles = new Map<string, UserProfile>();
+
+        users.forEach((user) => {
+          const profile: UserProfile = {
+            uid: user['uid'],
+            name: user['displayName'],
+            avatar: user['photoURL']
+          };
+          profiles.set(profile.uid, profile);
+        });
+
+        return profiles;
+      })
+    );
   }
 
   sendMessage(message: Message) {

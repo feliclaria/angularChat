@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { map, Observable, tap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { Message, MessageStream } from 'src/app/interfaces/message';
 import { User } from 'src/app/interfaces/user';
 import { UserProfile } from 'src/app/interfaces/user-profile';
 import { MessageService } from 'src/app/services/message.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-chat',
@@ -13,35 +12,42 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  @Input() user!: User | null;
+  @Input() user: User | undefined = undefined;
 
-  messages$!: Observable<MessageStream[]>;
-  users$!: Observable<Map<string, UserProfile>>;
+  messages: MessageStream[] = [];
+  profiles: Map<string, UserProfile> = new Map();
 
-  msgForm = this.fb.group({
+  msgForm = this.formBuilder.group({
     messageContent: ['', [Validators.required]]
   });
 
-  constructor(
-    private fb: FormBuilder,
-    private messageService: MessageService,
-    public userService: UserService
-  ) {}
+  constructor(private formBuilder: FormBuilder, private messageService: MessageService) {}
 
   ngOnInit() {
-    this.messages$ = this.messageService
-      .getMessages()
-      .pipe(map((msgs) => this.messageService.groupMessages(msgs)));
-    this.users$ = this.messageService.getUsers();
+    const rawMessages$ = this.messageService.getMessages();
+    rawMessages$
+      .pipe(map((msgs) => this.messageService.groupMessages(msgs)))
+      .subscribe((msgs) => (this.messages = msgs));
+
+    rawMessages$
+      .pipe(switchMap((msgs) => this.messageService.getProfilesFromMessages(msgs)))
+      .subscribe((prs) => (this.profiles = prs));
   }
 
   onSubmit() {
-    const messageContent = this.msgForm.value.messageContent!.trim();
-
-    if (!messageContent) {
+    const rawMessageContent = this.msgForm.value.messageContent;
+    if (!rawMessageContent) {
       this.msgForm.reset();
       return;
     }
+
+    const messageContent = rawMessageContent.trim();
+
+    if (!rawMessageContent) {
+      this.msgForm.reset();
+      return;
+    }
+
     const message: Message = {
       text: messageContent,
       date: new Date(),

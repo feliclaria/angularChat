@@ -4,7 +4,7 @@
       <button type="button" class="btn btn-danger" (click)="onClick()">Log out</button>
     </div>
     <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-      <app-chat [user]="authService.user$ | async" />
+      <app-chat [user]="(authService.user$ | async) ?? undefined" />
     </div>
   </div>
 </div>
