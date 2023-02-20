@@ -16,12 +16,7 @@
           >
             <div class="row gy-1 px-1 ms-3">
               <div *ngFor="let msg of msgGroup.messages" class="col-12 d-flex justify-content-end">
-                <div class="small d-inline-block bg-primary rounded-3 ps-2 p-1">
-                  <p class="text-start text-light mb-0 me-2">{{ msg.text }}</p>
-                  <p class="small text-end text-light fw-light mb-0 lh-1 user-select-none">
-                    {{ msg.date | date : 'HH:mm' }}
-                  </p>
-                </div>
+                <app-message-bubble-right [text]="msg.text" [date]="msg.date" />
               </div>
             </div>
 
@@ -51,15 +46,11 @@
 
             <div class="row gy-1 px-1 me-3">
               <div *ngFor="let msg of msgGroup.messages; index as i" class="col-12">
-                <div class="small d-inline-block bg-body-tertiary rounded-3 border ps-2 p-1">
-                  <p *ngIf="i === 0" class="text-start text-success fw-semibold my-0 me-2">
-                    {{ profiles.get(msgGroup.uid)?.name }}
-                  </p>
-                  <p class="text-start mb-0 me-2">{{ msg.text }}</p>
-                  <p class="small text-end text-muted fw-light mb-0 lh-1 user-select-none">
-                    {{ msg.date | date : 'HH:mm' }}
-                  </p>
-                </div>
+                <app-message-bubble-left
+                  [username]="i === 0 ? profiles.get(msgGroup.uid)?.name : undefined"
+                  [text]="msg.text"
+                  [date]="msg.date"
+                />
               </div>
             </div>
           </div>
