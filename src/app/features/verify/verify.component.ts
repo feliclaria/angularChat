@@ -64,8 +64,6 @@ export class VerifyComponent implements AfterViewInit {
   onSendCodeSubmit() {
     const appVerifier = this.recaptchaVerifier!;
     const phoneNumber: string = this.phoneNumberForm.value.phone!['e164Number'];
-    console.log(appVerifier);
-    console.log(phoneNumber);
     this.authService.sendVerificationCode(phoneNumber, appVerifier).subscribe(() => {
       this.currentForm = 'verificationCode';
     });

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { map, switchMap } from 'rxjs';
+import { map, Subscription, switchMap } from 'rxjs';
 import { Message, MessageStream } from 'src/app/interfaces/message';
 import { User } from 'src/app/interfaces/user';
 import { UserProfile } from 'src/app/interfaces/user-profile';
@@ -11,10 +11,13 @@ import { MessageService } from '../../services/message.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   @Input() user: User | undefined = undefined;
 
+  private messagesSub?: Subscription;
   messages: MessageStream[] = [];
+
+  private profilesSub?: Subscription;
   profiles: Map<string, UserProfile> = new Map();
 
   msgForm = this.formBuilder.group({
@@ -25,13 +28,19 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     const rawMessages$ = this.messageService.getMessages();
-    rawMessages$
+
+    this.messagesSub = rawMessages$
       .pipe(map((msgs) => this.messageService.groupMessages(msgs)))
       .subscribe((msgs) => (this.messages = msgs));
 
-    rawMessages$
+    this.profilesSub = rawMessages$
       .pipe(switchMap((msgs) => this.messageService.getProfilesFromMessages(msgs)))
       .subscribe((prs) => (this.profiles = prs));
+  }
+
+  ngOnDestroy() {
+    this.messagesSub?.unsubscribe();
+    this.profilesSub?.unsubscribe();
   }
 
   onSubmit() {
