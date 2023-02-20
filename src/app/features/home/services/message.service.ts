@@ -10,9 +10,9 @@ import {
 } from '@angular/fire/firestore';
 import { from, Observable, map, combineLatest, of } from 'rxjs';
 
-import { DateMessages, Message, MessageStream, UserMessages } from '../interfaces/message';
-import { UserProfile } from '../interfaces/user-profile';
-import { UserService } from './user.service';
+import { DateMessages, Message, MessageStream, UserMessages } from '../../../interfaces/message';
+import { UserProfile } from '../../../interfaces/user-profile';
+import { UserService } from '../../../services/user.service';
 
 @Injectable({
   providedIn: 'root'

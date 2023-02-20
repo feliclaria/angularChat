@@ -22,7 +22,7 @@ const passwordsDontMatchValidator: ValidatorFn = (
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: []
 })
 export class SignUpComponent {
   signUpForm = this.fb.group(

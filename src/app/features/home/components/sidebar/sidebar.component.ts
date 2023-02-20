@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: []
 })
 export class SidebarComponent {
   @Input() user: User | undefined = undefined;

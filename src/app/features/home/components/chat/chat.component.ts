@@ -4,7 +4,7 @@ import { map, switchMap } from 'rxjs';
 import { Message, MessageStream } from 'src/app/interfaces/message';
 import { User } from 'src/app/interfaces/user';
 import { UserProfile } from 'src/app/interfaces/user-profile';
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-chat',
