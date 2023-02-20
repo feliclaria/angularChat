@@ -51,7 +51,7 @@
 
             <div class="row gy-1 px-1 me-3">
               <div *ngFor="let msg of msgGroup.messages; index as i" class="col-12">
-                <div class="small d-inline-block bg-light rounded-3 border ps-2 p-1">
+                <div class="small d-inline-block bg-body-tertiary rounded-3 border ps-2 p-1">
                   <p *ngIf="i === 0" class="text-start text-success fw-semibold my-0 me-2">
                     {{ profiles.get(msgGroup.uid)?.name }}
                   </p>

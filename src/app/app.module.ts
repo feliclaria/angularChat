@@ -24,6 +24,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { TextDividerComponent } from './components/text-divider.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ThemeSwitcherComponent } from './components/theme-switcher.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     HomeComponent,
     ChatComponent,
     TextDividerComponent,
-    SidebarComponent
+    SidebarComponent,
+    ThemeSwitcherComponent
   ],
   imports: [
     BrowserModule,
