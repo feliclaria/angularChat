@@ -8,8 +8,4 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HomeComponent {
   constructor(public authService: AuthService) {}
-
-  onClick() {
-    this.authService.logOut().subscribe();
-  }
 }

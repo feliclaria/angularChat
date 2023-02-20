@@ -1,10 +1,8 @@
-<div class="container">
-  <div class="d-flex">
-    <div class="col">
-      <button type="button" class="btn btn-danger" (click)="onClick()">Log out</button>
-    </div>
-    <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
-      <app-chat [user]="(authService.user$ | async) ?? undefined" />
-    </div>
+<div class="d-flex">
+  <div class="col">
+    <app-sidebar [user]="(authService.user$ | async) ?? undefined"></app-sidebar>
+  </div>
+  <div class="col-9">
+    <app-chat [user]="(authService.user$ | async) ?? undefined" />
   </div>
 </div>

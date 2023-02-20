@@ -23,6 +23,7 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { HomeComponent } from './components/home/home.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { TextDividerComponent } from './components/text-divider.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TextDividerComponent } from './components/text-divider.component';
     LogInComponent,
     HomeComponent,
     ChatComponent,
-    TextDividerComponent
+    TextDividerComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
