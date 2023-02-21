@@ -5,9 +5,9 @@ import { ChangeData, CountryISO } from '@capgo/ngx-intl-tel-input';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-phone-info',
-  templateUrl: './phone-info.component.html',
-  styleUrls: ['./phone-info.component.css']
+  selector: 'app-phone-step',
+  templateUrl: './phone-step.component.html',
+  styleUrls: ['./phone-step.component.css']
 })
 export class PhoneInfoComponent implements AfterViewInit {
   @Output() nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();

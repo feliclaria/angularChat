@@ -4,8 +4,8 @@ import { ChangeData } from '@capgo/ngx-intl-tel-input';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-phone-verification',
-  templateUrl: './phone-verification.component.html',
+  selector: 'app-verification-step',
+  templateUrl: './verification-step.component.html',
   styleUrls: []
 })
 export class PhoneVerificationComponent {

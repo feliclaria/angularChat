@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ChangeData } from '@capgo/ngx-intl-tel-input';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-type FormStep = 'phoneInfo' | 'phoneVerification';
+type FormStep = 'phone' | 'verification';
 
 @Component({
   selector: 'app-verify-form',
@@ -10,7 +10,7 @@ type FormStep = 'phoneInfo' | 'phoneVerification';
   styleUrls: []
 })
 export class VerifyFormComponent {
-  private currentStepBs: BehaviorSubject<FormStep> = new BehaviorSubject<FormStep>('phoneInfo');
+  private currentStepBs: BehaviorSubject<FormStep> = new BehaviorSubject<FormStep>('phone');
 
   currentStep$: Observable<FormStep> = this.currentStepBs.asObservable();
 
@@ -24,8 +24,8 @@ export class VerifyFormComponent {
 
   nextStep(currentStep: string) {
     switch (currentStep) {
-      case 'phoneInfoStep':
-        this.currentStepBs.next('phoneVerification');
+      case 'phoneStep':
+        this.currentStepBs.next('verification');
         break;
     }
   }
