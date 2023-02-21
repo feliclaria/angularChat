@@ -1,76 +1,17 @@
 import { NgModule } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot, Routes } from '@angular/router';
-import { AuthPipeGenerator, canActivate } from '@angular/fire/auth-guard';
-import { map, of, switchMap } from 'rxjs';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthPipe, canActivate } from '@angular/fire/auth-guard';
+import { map, pipe } from 'rxjs';
 
-const redirectToHomeOrVerify: AuthPipeGenerator = (
-  next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) =>
-  switchMap((user) => {
-    return of(user).pipe(
-      map((user) => {
-        if (user) {
-          if (user.phoneNumber) {
-            // User is authorized and verified
-            return ['/home'];
-          } else {
-            // User is authorized but not verified
-            return ['/verify'];
-          }
-        } else {
-          // User is not authorized
-          return true;
-        }
-      })
-    );
-  });
-
-const redirectToLogInOrVerify: AuthPipeGenerator = (
-  next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) =>
-  switchMap((user) => {
-    return of(user).pipe(
-      map((user) => {
-        if (user) {
-          if (user.phoneNumber) {
-            // User is authorized and verified
-            return true;
-          } else {
-            // User is authorized but not verified
-            return ['/verify'];
-          }
-        } else {
-          // User is not authorized
-          return ['/login'];
-        }
-      })
-    );
-  });
-
-const redirectToHomeOrLogIn: AuthPipeGenerator = (
-  next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) =>
-  switchMap((user) => {
-    return of(user).pipe(
-      map((user) => {
-        if (user) {
-          if (user.phoneNumber) {
-            // User is authorized and verified
-            return ['/home'];
-          } else {
-            // User is authorized but not verified
-            return true;
-          }
-        } else {
-          // User is not authorized
-          return ['/login'];
-        }
-      })
-    );
-  });
+const notLoggedIn: AuthPipe = pipe(
+  map((user) => !user || (!!user.phoneNumber ? ['/home'] : ['/verify']))
+);
+const loggedInAndVerified: AuthPipe = pipe(
+  map((user) => (!!user && !!user.phoneNumber) || (!user ? ['/login'] : ['/verify']))
+);
+const loggedInAndUnverified: AuthPipe = pipe(
+  map((user) => (!!user && !user.phoneNumber) || (!user ? ['/login'] : ['/home']))
+);
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -78,22 +19,22 @@ const routes: Routes = [
     path: 'signup',
     loadChildren: () =>
       import('src/app/features/sign-up/sign-up.module').then((m) => m.SignUpModule),
-    ...canActivate(redirectToHomeOrVerify)
+    ...canActivate(() => notLoggedIn)
   },
   {
     path: 'login',
     loadChildren: () => import('src/app/features/log-in/log-in.module').then((m) => m.LogInModule),
-    ...canActivate(redirectToHomeOrVerify)
+    ...canActivate(() => notLoggedIn)
   },
   {
     path: 'home',
     loadChildren: () => import('src/app/features/home/home.module').then((m) => m.HomeModule),
-    ...canActivate(redirectToLogInOrVerify)
+    ...canActivate(() => loggedInAndVerified)
   },
   {
     path: 'verify',
     loadChildren: () => import('src/app/features/verify/verify.module').then((m) => m.VerifyModule),
-    ...canActivate(redirectToHomeOrLogIn)
+    ...canActivate(() => loggedInAndUnverified)
   },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
