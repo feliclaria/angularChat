@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize, Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { AvatarService } from 'src/app/services/avatar.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,12 +17,14 @@ export class PersonalInfoStepComponent implements OnInit, OnDestroy {
   userSub?: Subscription;
 
   personalInfoForm = this.formBuilder.group({
+    avatar: [<File>{}],
     username: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]
   });
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private avatarService: AvatarService,
     private userService: UserService,
     private router: Router
   ) {}
@@ -36,8 +39,30 @@ export class PersonalInfoStepComponent implements OnInit, OnDestroy {
     if (this.userSub) this.userSub.unsubscribe();
   }
 
+  onFileChange(event: Event) {
+    const file = (<HTMLInputElement>event.target).files?.[0];
+    if (!file) return;
+
+    this.personalInfoForm.controls.avatar.setValue(file);
+  }
+
   onPersonalInfoSubmit() {
     if (!this.uid) return;
+
+    if (this.personalInfoForm.value.avatar) {
+      this.avatarService
+        .uploadAvatar(this.uid, this.personalInfoForm.value.avatar)
+        .pipe(
+          switchMap(() => this.avatarService.getAvatarURL(this.uid!)),
+          switchMap((avatarURL) =>
+            this.userService.setUser({
+              uid: this.uid!,
+              photoURL: avatarURL
+            })
+          )
+        )
+        .subscribe();
+    }
 
     this.userService
       .setUser({

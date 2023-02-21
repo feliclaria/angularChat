@@ -3,6 +3,15 @@
     <h3 class="card-title text-center fw-semibold my-3">Personal info</h3>
 
     <form class="row gy-2" [formGroup]="personalInfoForm" (ngSubmit)="onPersonalInfoSubmit()">
+      <div class="col-12">
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          class="form-control form-control-lg fs-6"
+          (change)="onFileChange($event)"
+        />
+      </div>
+
       <div class="col-12 input-group">
         <span class="input-group-text" id="at-addon">@</span>
         <input
