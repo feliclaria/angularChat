@@ -34,13 +34,12 @@ export class AuthService {
     );
   }
 
-  signUp(displayName: string, email: string, password: string): Observable<void> {
+  signUp(email: string, password: string): Observable<void> {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap((credential) => {
         const uid = credential.user.uid;
-        return this.userService.setUser({ uid, displayName, email });
-      }),
-      finalize(() => this.router.navigateByUrl('/home'))
+        return this.userService.setUser({ uid, email });
+      })
     );
   }
 

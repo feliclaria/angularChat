@@ -1,0 +1,46 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title text-center fw-semibold my-3">Personal info</h3>
+
+    <form class="row gy-2" [formGroup]="personalInfoForm" (ngSubmit)="onPersonalInfoSubmit()">
+      <div class="col-12 input-group">
+        <span class="input-group-text" id="at-addon">@</span>
+        <input
+          type="text"
+          class="form-control form-control-lg fs-6 has-validation"
+          placeholder="Username"
+          formControlName="username"
+          aria-describedby="at-addon"
+          [ngClass]="{
+            'is-invalid':
+              personalInfoForm.get('username')?.touched && personalInfoForm.get('username')?.errors
+          }"
+        />
+
+        <div *ngIf="personalInfoForm.get('username')?.touched" class="invalid-feedback">
+          <div *ngIf="personalInfoForm.hasError('required', 'username'); else nameMinLength">
+            Username is required.
+          </div>
+
+          <ng-template #nameMinLength>
+            <div *ngIf="personalInfoForm.hasError('minlength', 'username'); else nameMaxLength">
+              The username must be at least 6 characters long.
+            </div>
+          </ng-template>
+
+          <ng-template #nameMaxLength>
+            <div *ngIf="personalInfoForm.hasError('maxlength', 'username')">
+              The username can't be longer than 30 characters.
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg" [disabled]="!personalInfoForm.valid">
+          Continue
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

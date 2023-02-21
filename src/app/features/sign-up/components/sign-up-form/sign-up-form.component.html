@@ -1,0 +1,4 @@
+<ng-container [ngSwitch]="currentStep$ | async">
+  <app-account-step *ngSwitchCase="'account'" (nextStep)="nextStep()" />
+  <app-personal-info-step *ngSwitchCase="'personalInfo'" />
+</ng-container>

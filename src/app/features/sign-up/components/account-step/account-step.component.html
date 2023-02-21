@@ -1,0 +1,91 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title text-center fw-semibold my-3">Sign up</h3>
+
+    <form class="row gy-2" [formGroup]="accountForm" (ngSubmit)="onSignUpSubmit()">
+      <div class="col-12">
+        <input
+          type="email"
+          class="form-control form-control-lg fs-6"
+          placeholder="Email"
+          formControlName="email"
+          [ngClass]="{
+            'is-invalid': accountForm.get('email')?.touched && accountForm.get('email')?.errors
+          }"
+        />
+
+        <div *ngIf="accountForm.get('email')?.touched" class="invalid-feedback">
+          <div *ngIf="accountForm.hasError('required', 'email'); else emailInvalid">
+            Email is required.
+          </div>
+
+          <ng-template #emailInvalid>
+            <div *ngIf="accountForm.hasError('email', 'email')">
+              The email address you entered is not valid.
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <input
+          type="password"
+          class="form-control form-control-lg fs-6"
+          placeholder="Password"
+          formControlName="password"
+          [ngClass]="{
+            'is-invalid':
+              accountForm.get('password')?.touched && accountForm.get('password')?.errors
+          }"
+        />
+
+        <div *ngIf="accountForm.get('password')?.touched" class="invalid-feedback">
+          <div *ngIf="accountForm.hasError('required', 'password'); else passwordMaxLength">
+            Password is required.
+          </div>
+
+          <ng-template #passwordMaxLength>
+            <div *ngIf="accountForm.hasError('maxlength', 'password'); else passwordInvalid">
+              The password cannot be longer than 50 characters.
+            </div>
+          </ng-template>
+
+          <ng-template #passwordInvalid>
+            <div
+              *ngIf="
+                accountForm.hasError('minlength', 'password') ||
+                accountForm.hasError('pattern', 'password')
+              "
+            >
+              The password must have at least 8 characters and contain all of the following:
+              lowercase letters, upercase letters, and numbers.
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg" [disabled]="!accountForm.valid">
+          Sign up
+        </button>
+      </div>
+    </form>
+
+    <app-text-divider [content]="'or'" />
+
+    <div class="d-grid">
+      <button
+        type="button"
+        class="btn btn-outline-danger position-relative"
+        (click)="onJoinWithGoogleClick()"
+      >
+        <i class="float-start bi bi-google"></i>
+        <div class="position-absolute top-50 start-50 translate-middle">Join with Google</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <p class="card-text fw-light">Already have an account? <a routerLink="/login">Log in</a></p>
+  </div>
+</div>
