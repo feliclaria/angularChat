@@ -1,0 +1,12 @@
+<ng-container [ngSwitch]="currentStep$ | async">
+  <app-phone-info
+    *ngSwitchCase="'phoneInfo'"
+    (phoneEmitter)="setPhoneInfo($event)"
+    (nextStep)="nextStep('phoneInfoStep')"
+  />
+  <app-phone-verification
+    *ngSwitchCase="'phoneVerification'"
+    [phone]="phoneInfo"
+    (nextStep)="nextStep('phoneVerificationStep')"
+  />
+</ng-container>

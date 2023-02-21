@@ -1,0 +1,33 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title text-center fw-semibold my-3">Verify your account</h3>
+
+    <p class="card-text text-center fw-light">
+      Please enter your phone number to verify your account. You will recieve an SMS with a
+      verification code.
+    </p>
+
+    <form class="row gy-2" [formGroup]="phoneInfoForm">
+      <div class="col-12">
+        <ngx-intl-tel-input
+          cssClass="form-control form-control-lg fs-6"
+          [searchCountryFlag]="true"
+          [selectedCountryISO]="ArgISO"
+          [separateDialCode]="true"
+          formControlName="phone"
+        ></ngx-intl-tel-input>
+      </div>
+
+      <div class="d-grid">
+        <button
+          id="send-code-button"
+          type="submit"
+          class="btn btn-primary btn-lg"
+          [disabled]="!phoneInfoForm.valid"
+        >
+          Send code
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

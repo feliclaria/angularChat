@@ -1,0 +1,31 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title text-center fw-semibold my-3">Verify your account</h3>
+
+    <p class="card-text text-center fw-light">
+      An SMS with a 6-digit verification code has been sent to
+      {{ this.phoneNumber }}.
+    </p>
+
+    <form class="row gy-2" [formGroup]="phoneVerificationForm" (ngSubmit)="onValidateCodeSubmit()">
+      <div class="col-12">
+        <input
+          type="text"
+          class="form-control form-control-lg fs-6"
+          placeholder="Verification code"
+          formControlName="code"
+        />
+      </div>
+
+      <div class="d-grid">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          [disabled]="!phoneVerificationForm.valid"
+        >
+          Confirm
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
