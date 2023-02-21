@@ -2,11 +2,7 @@
   <app-phone-step
     *ngSwitchCase="'phone'"
     (phoneEmitter)="setPhoneInfo($event)"
-    (nextStep)="nextStep('phoneStep')"
+    (nextStep)="nextStep()"
   />
-  <app-verification-step
-    *ngSwitchCase="'verification'"
-    [phone]="phoneInfo"
-    (nextStep)="nextStep('verificationStep')"
-  />
+  <app-verification-step *ngSwitchCase="'verification'" [phone]="phoneInfo" />
 </ng-container>

@@ -22,11 +22,7 @@ export class VerifyFormComponent {
     this.phoneInfo = phone;
   }
 
-  nextStep(currentStep: string) {
-    switch (currentStep) {
-      case 'phoneStep':
-        this.currentStepBs.next('verification');
-        break;
-    }
+  nextStep() {
+    this.currentStepBs.next('verification');
   }
 }
