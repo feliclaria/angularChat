@@ -8,9 +8,10 @@ import { VerifyComponent } from './verify.component';
 import { VerifyFormComponent } from './components/verify-form/verify-form.component';
 import { PhoneInfoComponent } from './components/phone-info/phone-info.component';
 import { PhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
+import { PhonePipe } from './pipes/phone.pipe';
 
 @NgModule({
-  declarations: [VerifyComponent, VerifyFormComponent, PhoneInfoComponent, PhoneVerificationComponent],
+  declarations: [VerifyComponent, VerifyFormComponent, PhoneInfoComponent, PhoneVerificationComponent, PhonePipe],
   imports: [CommonModule, SharedModule, VerifyRoutingModule, NgxIntlTelInputModule]
 })
 export class VerifyModule {}

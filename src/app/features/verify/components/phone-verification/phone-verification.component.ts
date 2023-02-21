@@ -25,20 +25,6 @@ export class PhoneVerificationComponent {
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
 
-  get phoneNumber(): string {
-    if (!this.phone || !this.phone.dialCode || !this.phone.number) return '';
-
-    const dialCode = this.phone.dialCode;
-    const number = this.phone.number;
-
-    return (
-      dialCode +
-      ' ' +
-      number.substring(0, number.length - 3).replace(/\d/g, '*') +
-      number.substring(number.length - 3, number.length)
-    );
-  }
-
   onValidateCodeSubmit() {
     this.authService.validatePhoneNumber(this.phoneVerificationForm.value.code!).subscribe();
   }

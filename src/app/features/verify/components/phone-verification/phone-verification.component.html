@@ -4,7 +4,7 @@
 
     <p class="card-text text-center fw-light">
       An SMS with a 6-digit verification code has been sent to
-      {{ this.phoneNumber }}.
+      {{ this.phone! | phone }}.
     </p>
 
     <form class="row gy-2" [formGroup]="phoneVerificationForm" (ngSubmit)="onValidateCodeSubmit()">
