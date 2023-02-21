@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
-  styleUrls: []
+  styleUrls: ['./verify.component.css']
 })
 export class VerifyComponent implements AfterViewInit {
   ArgISO = CountryISO.Argentina;
