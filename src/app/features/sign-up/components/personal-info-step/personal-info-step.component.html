@@ -3,13 +3,30 @@
     <h3 class="card-title text-center fw-semibold my-3">Personal info</h3>
 
     <form class="row gy-2" [formGroup]="personalInfoForm" (ngSubmit)="onPersonalInfoSubmit()">
-      <div class="col-12">
+      <div class="d-flex align-items-center">
         <input
+          #avatarInput
           type="file"
           accept="image/png, image/jpeg"
           class="form-control form-control-lg fs-6"
           (change)="onFileChange($event)"
+          [ngClass]="{
+            'is-invalid': personalInfoForm.get('avatar')?.errors
+          }"
         />
+        <button
+          type="button"
+          class="btn-close ms-2"
+          [disabled]="!avatarFile"
+          (click)="onRemoveAvatarClick()"
+        ></button>
+      </div>
+
+      <div
+        *ngIf="personalInfoForm.hasError('invalidFileFormat', 'avatar')"
+        class="invalid-feedback d-block"
+      >
+        Invalid file input. Avatar format must be PNG or JPEG.
       </div>
 
       <div class="col-12 input-group">
