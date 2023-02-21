@@ -1,8 +1,8 @@
 <div class="d-flex">
   <div class="col">
-    <app-sidebar [user]="(authService.user$ | async) ?? undefined"></app-sidebar>
+    <app-sidebar [user]="user ?? undefined"></app-sidebar>
   </div>
   <div class="col-9">
-    <app-chat [user]="(authService.user$ | async) ?? undefined" />
+    <app-chat [user]="user ?? undefined" />
   </div>
 </div>

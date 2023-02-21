@@ -36,6 +36,11 @@ const routes: Routes = [
     loadChildren: () => import('src/app/features/verify/verify.module').then((m) => m.VerifyModule),
     ...canActivate(() => loggedInAndUnverified)
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./features/account/account.module').then((m) => m.AccountModule),
+    ...canActivate(() => loggedInAndVerified)
+  },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 

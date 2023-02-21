@@ -1,0 +1,29 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title text-center fw-semibold my-3">Account</h3>
+
+    <div class="d-flex flex-column">
+      <div class="col-12 form-floating mb-2">
+        <input
+          type="email"
+          class="form-control-plaintext form-control-lg fs-6"
+          id="profileEmail"
+          value="{{ user?.email }}"
+          readonly
+        />
+        <label for="profileEmail">Email address</label>
+      </div>
+
+      <div class="col-12 form-floating">
+        <input
+          type="tel"
+          class="form-control-plaintext form-control-lg fs-6"
+          id="profilePhone"
+          value="{{ user?.phoneNumber }}"
+          readonly
+        />
+        <label for="profilePhone">Phone number</label>
+      </div>
+    </div>
+  </div>
+</div>

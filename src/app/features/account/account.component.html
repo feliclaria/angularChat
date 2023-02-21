@@ -1,0 +1,21 @@
+<div class="container d-flex flex-column justify-content-center h-100">
+  <div class="row gy-3">
+    <div class="col-12">
+      <div class="col-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+        <app-account-card [user]="(this.authService.user$ | async) ?? undefined" />
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="col-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+        <app-new-password-card />
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="col-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+        <app-delete-account-button />
+      </div>
+    </div>
+  </div>
+</div>
