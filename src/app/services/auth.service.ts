@@ -43,12 +43,13 @@ export class AuthService {
     );
   }
 
-  signUp(email: string, password: string): Observable<void> {
+  createAccount(username: string, email: string, password: string): Observable<boolean> {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap((credential) => {
         const uid = credential.user.uid;
-        return this.userService.updateUserDoc({ uid, email });
-      })
+        return this.userService.updateUserDoc({ uid, email, displayName: username });
+      }),
+      switchMap(() => from(this.router.navigateByUrl('/verify')))
     );
   }
 
