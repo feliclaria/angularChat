@@ -26,6 +26,8 @@ export class PhoneVerificationComponent {
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
 
   onValidateCodeSubmit() {
-    this.authService.validatePhoneNumber(this.phoneVerificationForm.value.code!).subscribe();
+    this.authService
+      .validatePhoneNumber(this.phoneVerificationForm.value.code!)
+      .subscribe(() => localStorage.removeItem('_grecaptcha'));
   }
 }
