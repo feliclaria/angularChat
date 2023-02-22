@@ -23,11 +23,10 @@ export class UserService {
 
   getUserDoc(uid: string): Observable<User | null> {
     const ref = this.getUserRef(uid);
-
-    return from(getDoc(ref)).pipe(
-      map((doc) => {
-        if (!doc.exists()) return null;
-        return doc.data();
+    return docData(ref).pipe(
+      map((data) => {
+        if (!data) return null;
+        return data;
       })
     ) as Observable<User | null>;
   }

@@ -7,7 +7,7 @@
       <div class="d-flex mb-4">
         <ngx-avatars
           class="user-select-none me-2"
-          [src]="user?.photoURL"
+          [src]="user?.photoURL ?? ''"
           [name]="user?.displayName"
           [textSizeRatio]="2.5"
           referrerpolicy="no-referrer"
@@ -43,32 +43,30 @@
             id="edit-username-input"
             [ngClass]="{
               'is-invalid':
-                profileForm.get('username')?.touched && profileForm.get('username')?.errors
+                profileForm.get('username')?.touched &&
+                (profileForm.hasError('minlength', 'username') ||
+                  profileForm.hasError('maxlength', 'username'))
             }"
           />
-        </div>
 
-        <div *ngIf="profileForm.get('username')?.touched" class="invalid-feedback">
-          <div *ngIf="profileForm.hasError('required', 'username'); else nameMinLength">
-            Username is required.
-          </div>
-
-          <ng-template #nameMinLength>
+          <div *ngIf="profileForm.get('username')?.touched" class="invalid-feedback">
             <div *ngIf="profileForm.hasError('minlength', 'username'); else nameMaxLength">
               The username must be at least 6 characters long.
             </div>
-          </ng-template>
 
-          <ng-template #nameMaxLength>
-            <div *ngIf="profileForm.hasError('maxlength', 'username')">
-              The username can't be longer than 30 characters.
-            </div>
-          </ng-template>
+            <ng-template #nameMaxLength>
+              <div *ngIf="profileForm.hasError('maxlength', 'username')">
+                The username can't be longer than 30 characters.
+              </div>
+            </ng-template>
+          </div>
         </div>
       </div>
 
       <div class="d-grid">
-        <button type="submit" class="btn btn-primary btn-lg">Update profile</button>
+        <button type="submit" class="btn btn-primary btn-lg" [disabled]="!profileForm.valid">
+          Update profile
+        </button>
       </div>
     </form>
   </div>

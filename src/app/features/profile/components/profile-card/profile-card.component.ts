@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/interfaces/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile-card',
@@ -11,14 +12,25 @@ export class ProfileCardComponent {
   @Input() user?: User | null;
 
   profileForm = this.formBuilder.group({
-    username: ['']
+    username: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private userService: UserService) {}
 
   onUploadPhoto() {}
 
   onRemovePhoto() {}
 
-  onEditProfileSubmit() {}
+  onEditProfileSubmit() {
+    if (!this.user || !this.profileForm.value.username) return;
+
+    this.userService
+      .updateUserDoc({
+        uid: this.user.uid,
+        displayName: this.profileForm.value.username
+      })
+      .subscribe(() => {
+        this.profileForm.reset();
+      });
+  }
 }
