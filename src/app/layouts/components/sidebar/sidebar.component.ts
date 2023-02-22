@@ -5,10 +5,10 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: []
+  styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  @Input() user: User | undefined = undefined;
+  @Input() user: User | null = null;
 
   constructor(private authService: AuthService) {}
 

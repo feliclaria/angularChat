@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-
-type FormStep = 'account' | 'personalInfo';
 
 @Component({
   selector: 'app-sign-up-form',

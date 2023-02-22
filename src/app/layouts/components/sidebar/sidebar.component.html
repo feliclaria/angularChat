@@ -1,0 +1,69 @@
+<div class="sidebar bg-body border-end">
+  <nav class="navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <i class="bi bi-chat-quote-fill"></i>
+        Angular Chat
+      </a>
+    </div>
+  </nav>
+
+  <hr class="my-0" />
+
+  <div *ngIf="!!user && !!user.phoneNumber">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-start align-items-center py-2 px-3">
+        <ngx-avatars
+          class="user-select-none me-2"
+          [src]="user.photoURL ?? ''"
+          [name]="user.displayName"
+          [textSizeRatio]="2.5"
+          referrerpolicy="no-referrer"
+          size="45"
+          id="avatar-preview"
+        />
+        <h6 class="">{{ user.displayName }}</h6>
+      </li>
+      <a class="list-group-item list-group-item-action" routerLink="/home">Chat</a>
+      <a class="list-group-item list-group-item-action" routerLink="/profile">Edit profile</a>
+      <a class="list-group-item list-group-item-action" routerLink="/account">Account</a>
+      <li class="list-group-item list-group-item-action d-flex justify-content-between">
+        Dark mode <app-theme-switcher />
+      </li>
+      <button
+        type="button"
+        class="list-group-item list-group-item-action"
+        (click)="onLogOutClick()"
+      >
+        Log out
+      </button>
+    </ul>
+  </div>
+
+  <div *ngIf="!!user && !user.phoneNumber">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item list-group-item-action d-flex justify-content-between">
+        Dark mode <app-theme-switcher />
+      </li>
+      <button
+        type="button"
+        class="list-group-item list-group-item-action"
+        (click)="onLogOutClick()"
+      >
+        Log out
+      </button>
+    </ul>
+  </div>
+
+  <div *ngIf="!user">
+    <ul class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action" routerLink="/login">Log in</a>
+      <a class="list-group-item list-group-item-action" routerLink="/signup">Sign up</a>
+      <li class="list-group-item list-group-item-action d-flex justify-content-between">
+        Dark mode <app-theme-switcher />
+      </li>
+    </ul>
+  </div>
+
+  <hr class="my-0" />
+</div>

@@ -7,8 +7,6 @@ import { AutosizeModule } from 'ngx-autosize';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { ChatComponent } from './components/chat/chat.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { ThemeSwitcherComponent } from './components/theme-switcher.component';
 import { MessageBubbleLeftComponent } from './components/message-bubble-left.component';
 import { MessageBubbleRightComponent } from './components/message-bubble-right.component';
 
@@ -16,8 +14,6 @@ import { MessageBubbleRightComponent } from './components/message-bubble-right.c
   declarations: [
     HomeComponent,
     ChatComponent,
-    SidebarComponent,
-    ThemeSwitcherComponent,
     MessageBubbleLeftComponent,
     MessageBubbleRightComponent
   ],
