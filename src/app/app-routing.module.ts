@@ -41,6 +41,11 @@ const routes: Routes = [
     loadChildren: () => import('./features/account/account.module').then((m) => m.AccountModule),
     ...canActivate(() => loggedInAndVerified)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./features/profile/profile.module').then((m) => m.ProfileModule),
+    ...canActivate(() => loggedInAndVerified)
+  },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 

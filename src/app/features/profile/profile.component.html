@@ -1,0 +1,7 @@
+<div class="container d-flex flex-column justify-content-center h-100">
+  <div class="row gy-4">
+    <div class="col-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+      <app-profile-card [user]="authService.user$ | async" />
+    </div>
+  </div>
+</div>

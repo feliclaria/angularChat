@@ -1,0 +1,75 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title text-center fw-semibold my-3">Public profile</h3>
+
+    <div class="row gy-2">
+      <label for="avatar-preview" class="form-label">Avatar</label>
+      <div class="d-flex mb-4">
+        <ngx-avatars
+          class="user-select-none me-2"
+          [src]="user?.photoURL"
+          [name]="user?.displayName"
+          [textSizeRatio]="2.5"
+          referrerpolicy="no-referrer"
+          size="110"
+          id="avatar-preview"
+        />
+
+        <div class="col my-auto">
+          <div class="d-grid">
+            <button type="button" class="btn btn-outline-primary mb-2" (click)="onUploadPhoto()">
+              Upload a photo...
+            </button>
+          </div>
+          <div class="d-grid">
+            <button type="button" class="btn btn-outline-danger" (click)="onRemovePhoto()">
+              Remove photo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="row gy-2" [formGroup]="profileForm" (ngSubmit)="onEditProfileSubmit()">
+      <div class="col-12">
+        <label for="edit-username-input" class="form-label">Username</label>
+        <div class="input-group">
+          <span class="input-group-text">@</span>
+          <input
+            type="text"
+            class="form-control form-control-lg fs-6 has-validation"
+            placeholder="{{ user?.displayName }}"
+            formControlName="username"
+            id="edit-username-input"
+            [ngClass]="{
+              'is-invalid':
+                profileForm.get('username')?.touched && profileForm.get('username')?.errors
+            }"
+          />
+        </div>
+
+        <div *ngIf="profileForm.get('username')?.touched" class="invalid-feedback">
+          <div *ngIf="profileForm.hasError('required', 'username'); else nameMinLength">
+            Username is required.
+          </div>
+
+          <ng-template #nameMinLength>
+            <div *ngIf="profileForm.hasError('minlength', 'username'); else nameMaxLength">
+              The username must be at least 6 characters long.
+            </div>
+          </ng-template>
+
+          <ng-template #nameMaxLength>
+            <div *ngIf="profileForm.hasError('maxlength', 'username')">
+              The username can't be longer than 30 characters.
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">Update profile</button>
+      </div>
+    </form>
+  </div>
+</div>
