@@ -39,7 +39,7 @@ export class MessageService {
 
   getProfilesFromMessages(msgs: Message[]): Observable<Map<string, UserProfile>> {
     const uids = [...new Set(msgs.map((msg) => msg.uid))];
-    const users = uids.map((uid) => this.userService.getUser(uid));
+    const users = uids.map((uid) => this.userService.getUserDoc(uid));
     const users$ = users.length ? combineLatest(users) : of([]);
 
     return users$.pipe(

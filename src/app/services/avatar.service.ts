@@ -5,9 +5,10 @@ import {
   uploadBytes,
   getDownloadURL,
   UploadResult,
-  StorageReference
+  StorageReference,
+  deleteObject
 } from '@angular/fire/storage';
-import { from, Observable, switchMap } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class AvatarService {
 
   uploadAvatar(uid: string, avatar: File): Observable<UploadResult> {
     return from(uploadBytes(this.getAvatarRef(uid), avatar));
+  }
+
+  deleteAvatar(uid: string): Observable<void> {
+    return from(deleteObject(this.getAvatarRef(uid)));
   }
 }

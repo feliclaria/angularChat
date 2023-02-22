@@ -5,17 +5,21 @@ import {
   authState,
   ConfirmationResult,
   createUserWithEmailAndPassword,
+  deleteUser,
+  EmailAuthProvider,
   GoogleAuthProvider,
   linkWithPhoneNumber,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   UserCredential
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { finalize, from, Observable, of, switchMap, tap } from 'rxjs';
+import { finalize, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
 import { User } from '../interfaces/user';
 import { UserService } from './user.service';
+import { AvatarService } from './avatar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +29,15 @@ export class AuthService {
 
   confirmationResult: ConfirmationResult | undefined = undefined;
 
-  constructor(private auth: Auth, private router: Router, private userService: UserService) {
+  constructor(
+    private auth: Auth,
+    private router: Router,
+    private userService: UserService,
+    private avatarService: AvatarService
+  ) {
     this.user$ = authState(this.auth).pipe(
       switchMap((user) => {
-        if (user) return userService.getUser(user.uid);
+        if (user) return userService.getUserDoc(user.uid);
         else return of(null);
       })
     );
@@ -38,28 +47,28 @@ export class AuthService {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       switchMap((credential) => {
         const uid = credential.user.uid;
-        return this.userService.setUser({ uid, email });
+        return this.userService.updateUserDoc({ uid, email });
       })
     );
   }
 
-  logIn(email: string, password: string): Observable<UserCredential> {
+  logIn(email: string, password: string): Observable<boolean> {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-      finalize(() => this.router.navigateByUrl('/home'))
+      switchMap(() => from(this.router.navigateByUrl('/home')))
     );
   }
 
-  logInWithGoogle(): Observable<void> {
+  logInWithGoogle(): Observable<boolean> {
     return from(signInWithPopup(this.auth, new GoogleAuthProvider())).pipe(
       switchMap((credential) => {
         const user = credential.user;
-        return this.userService.setUser({
+        return this.userService.updateUserDoc({
           uid: user.uid,
           displayName: user.displayName ?? undefined,
           photoURL: user.photoURL ?? undefined
         });
       }),
-      finalize(() => this.router.navigateByUrl('/home'))
+      switchMap(() => from(this.router.navigateByUrl('/home')))
     );
   }
 
@@ -74,20 +83,47 @@ export class AuthService {
     );
   }
 
-  validatePhoneNumber(verificationCode: string): Observable<void> {
+  validatePhoneNumber(verificationCode: string): Observable<boolean> {
     return from(this.confirmationResult!.confirm(verificationCode)).pipe(
       switchMap((credential) => {
         const user = credential.user;
-        return this.userService.setUser({
+        return this.userService.updateUserDoc({
           uid: user.uid,
           phoneNumber: user.phoneNumber ?? undefined
         });
       }),
-      finalize(() => this.router.navigateByUrl('/home'))
+      switchMap(() => from(this.router.navigateByUrl('/home')))
     );
   }
 
-  logOut(): Observable<void> {
-    return from(signOut(this.auth)).pipe(finalize(() => this.router.navigateByUrl('/login')));
+  logOut(): Observable<boolean> {
+    return from(signOut(this.auth)).pipe(
+      switchMap(() => from(this.router.navigateByUrl('/login')))
+    );
+  }
+
+  private deleteUserData(uid: string): Observable<void> {
+    return this.userService.getUserDoc(uid).pipe(
+      switchMap((userDoc) => {
+        if (!userDoc || !userDoc.photoURL) return of(null);
+        return this.avatarService.deleteAvatar(uid);
+      }),
+      switchMap(() => this.userService.deleteUserDoc(uid))
+    );
+  }
+
+  deleteAccount(password: string): Observable<boolean | null> {
+    return authState(this.auth).pipe(
+      switchMap((user) => {
+        if (!user || !user.email) return of(null);
+
+        const credential = EmailAuthProvider.credential(user.email, password);
+        return from(reauthenticateWithCredential(user, credential)).pipe(
+          switchMap(() => this.deleteUserData(user.uid)),
+          switchMap(() => from(user.delete())),
+          switchMap(() => from(this.router.navigateByUrl('/login')))
+        );
+      })
+    );
   }
 }

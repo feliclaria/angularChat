@@ -1,5 +1,48 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Account deletion</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+
+  <div class="modal-body">
+    <p>
+      You're about to delete your account. Your profile and related account information will be
+      deleted from our site. All the messages you've sent will still be visible to other users.
+    </p>
+
+    <p class="text-danger"><strong>This action cannot be undone.</strong></p>
+
+    <p>
+      To confirm that you want to permanently delete your account, type in your password in the box
+      below.
+    </p>
+
+    <form
+      class="row gy-2"
+      [formGroup]="deleteAccountForm"
+      (ngSubmit)="onDeleteAccountSubmit(modal)"
+    >
+      <div class="col-12">
+        <input
+          type="password"
+          class="form-control form-control-lg fs-6"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <!-- <div *ngIf="deleteAccountForm.hasError('invalidCredentials')" class="invalid-feedback">
+          The email address or the password you entered is incorrect. Please try again.
+        </div> -->
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-danger btn-lg">Delete account</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
 <div class="d-grid">
-  <button type="submit" class="btn btn-danger" (click)="onDeleteAccountClick()">
+  <button type="submit" class="btn btn-danger" (click)="openDeleteAccountModal(content)">
     Delete account
   </button>
 </div>

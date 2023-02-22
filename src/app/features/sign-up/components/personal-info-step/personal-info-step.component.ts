@@ -78,26 +78,28 @@ export class PersonalInfoStepComponent implements OnInit, OnDestroy {
   }
 
   onPersonalInfoSubmit() {
-    // if (!this.uid) return;
-    // if (this.avatarFile) {
-    //   this.avatarService
-    //     .uploadAvatar(this.uid, this.avatarFile)
-    //     .pipe(
-    //       switchMap(() => this.avatarService.getAvatarURL(this.uid!)),
-    //       switchMap((avatarURL) =>
-    //         this.userService.setUser({
-    //           uid: this.uid!,
-    //           photoURL: avatarURL
-    //         })
-    //       )
-    //     )
-    //     .subscribe();
-    // }
-    // this.userService
-    //   .setUser({
-    //     uid: this.uid,
-    //     displayName: this.personalInfoForm.value.username!
-    //   })
-    //   .subscribe(() => this.router.navigateByUrl('/home'));
+    if (!this.uid) return;
+
+    if (this.avatarFile) {
+      this.avatarService
+        .uploadAvatar(this.uid, this.avatarFile)
+        .pipe(
+          switchMap(() => this.avatarService.getAvatarURL(this.uid!)),
+          switchMap((avatarURL) =>
+            this.userService.updateUserDoc({
+              uid: this.uid!,
+              photoURL: avatarURL
+            })
+          )
+        )
+        .subscribe();
+    }
+
+    this.userService
+      .updateUserDoc({
+        uid: this.uid,
+        displayName: this.personalInfoForm.value.username!
+      })
+      .subscribe(() => this.router.navigateByUrl('/home'));
   }
 }
