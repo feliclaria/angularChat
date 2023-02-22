@@ -46,14 +46,16 @@ export class MessageService {
       map((users) => {
         const profiles = new Map<string, UserProfile>();
 
-        users.forEach((user) => {
-          const profile: UserProfile = {
-            uid: user['uid'],
-            name: user['displayName'],
-            avatar: user['photoURL']
-          };
-          profiles.set(profile.uid, profile);
-        });
+        users
+          .filter((user) => user !== null)
+          .forEach((user) => {
+            const profile: UserProfile = {
+              uid: user!.uid,
+              name: user!.displayName,
+              avatar: user!.photoURL
+            };
+            profiles.set(profile.uid, profile);
+          });
 
         return profiles;
       })

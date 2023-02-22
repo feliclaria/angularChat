@@ -17,7 +17,7 @@
 
             <ngx-avatars
               class="user-select-none"
-              [src]="user?.photoURL"
+              [src]="user?.photoURL ?? ''"
               [name]="user?.displayName"
               [textSizeRatio]="2.5"
               referrerpolicy="no-referrer"
@@ -32,8 +32,8 @@
           >
             <ngx-avatars
               class="user-select-none"
-              [src]="profiles.get(msgGroup.uid)?.avatar"
-              [name]="profiles.get(msgGroup.uid)?.name"
+              [src]="profiles.get(msgGroup.uid)?.avatar ?? ''"
+              [name]="profiles.get(msgGroup.uid)?.name ?? '?'"
               [textSizeRatio]="2.5"
               referrerpolicy="no-referrer"
               size="40"
@@ -42,7 +42,7 @@
             <div class="row gy-1 px-1 me-3">
               <div *ngFor="let msg of msgGroup.messages; index as i" class="col-12">
                 <app-message-bubble-left
-                  [username]="i === 0 ? profiles.get(msgGroup.uid)?.name : undefined"
+                  [username]="i === 0 ? profiles.get(msgGroup.uid)?.name ?? '' : undefined"
                   [text]="msg.text"
                   [date]="msg.date"
                 />
