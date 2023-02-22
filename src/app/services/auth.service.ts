@@ -13,10 +13,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  UserCredential
+  updatePassword
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { finalize, forkJoin, from, Observable, of, switchMap, tap } from 'rxjs';
+import { from, Observable, of, switchMap, tap } from 'rxjs';
 import { User } from '../interfaces/user';
 import { UserService } from './user.service';
 import { AvatarService } from './avatar.service';
@@ -122,6 +122,19 @@ export class AuthService {
           switchMap(() => this.deleteUserData(user.uid)),
           switchMap(() => from(user.delete())),
           switchMap(() => from(this.router.navigateByUrl('/login')))
+        );
+      })
+    );
+  }
+
+  changePassword(oldPassword: string, newPassword: string) {
+    return authState(this.auth).pipe(
+      switchMap((user) => {
+        if (!user || !user.email) return of(null);
+
+        const credential = EmailAuthProvider.credential(user.email, oldPassword);
+        return from(reauthenticateWithCredential(user, credential)).pipe(
+          switchMap(() => from(updatePassword(user, newPassword)))
         );
       })
     );

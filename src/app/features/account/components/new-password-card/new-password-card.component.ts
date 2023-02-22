@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-new-password-card',
@@ -21,7 +21,14 @@ export class NewPasswordCardComponent {
     ]
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
 
-  onUpdatePasswordSubmit() {}
+  onUpdatePasswordSubmit() {
+    const values = this.newPasswordForm.value;
+    if (!values.oldPassword || !values.newPassword) return;
+
+    this.authService
+      .changePassword(values.oldPassword, values.newPassword)
+      .subscribe(() => this.newPasswordForm.reset());
+  }
 }
