@@ -9,12 +9,18 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: []
 })
 export class LogInComponent {
+  showPassword: boolean = false;
+
   logInForm = this.formBuilder.group({
     email: [''],
     password: ['']
   });
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   onSubmitLogInForm() {
     if (!this.logInForm.value.email || !this.logInForm.value.password) {

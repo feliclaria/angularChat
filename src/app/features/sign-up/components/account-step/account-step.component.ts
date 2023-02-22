@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AccountStepComponent {
   @Output() nextStep: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  showPassword: boolean = false;
+
   accountForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: [
@@ -24,6 +26,10 @@ export class AccountStepComponent {
   });
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   onSignUpSubmit() {
     this.authService

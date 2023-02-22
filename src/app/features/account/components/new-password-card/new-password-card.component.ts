@@ -8,6 +8,10 @@ import { AuthService } from 'src/app/services/auth.service';
   styles: []
 })
 export class NewPasswordCardComponent {
+  showOldPassword: boolean = false;
+
+  showNewPassword: boolean = false;
+
   newPasswordForm = this.formBuilder.group({
     oldPassword: [''],
     newPassword: [
@@ -22,6 +26,14 @@ export class NewPasswordCardComponent {
   });
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {}
+
+  toggleShowOldPassword() {
+    this.showOldPassword = !this.showOldPassword;
+  }
+
+  toggleShowNewPassword() {
+    this.showNewPassword = !this.showNewPassword;
+  }
 
   onUpdatePasswordSubmit() {
     const values = this.newPasswordForm.value;

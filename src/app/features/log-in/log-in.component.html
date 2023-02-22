@@ -17,16 +17,26 @@
             />
           </div>
 
-          <div class="col-12">
+          <div class="col-12 input-group">
             <input
-              type="password"
-              class="form-control form-control-lg fs-6"
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control form-control-lg fs-6 has-validation"
               placeholder="Password"
               formControlName="password"
               [ngClass]="{
                 'is-invalid': logInForm.hasError('invalidCredentials')
               }"
             />
+            <span class="input-group-text" (click)="toggleShowPassword()">
+              <i
+                class="bi"
+                [ngClass]="{
+                  'bi-eye-fill': !showPassword,
+                  'bi-eye-slash-fill': showPassword
+                }"
+              ></i>
+            </span>
+
             <div *ngIf="logInForm.hasError('invalidCredentials')" class="invalid-feedback">
               The email address or the password you entered is incorrect. Please try again.
             </div>
