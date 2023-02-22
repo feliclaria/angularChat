@@ -17,7 +17,11 @@
 
         <div class="col my-auto">
           <div class="d-grid">
-            <button type="button" class="btn btn-outline-primary mb-2" (click)="onUploadPhoto()">
+            <button
+              type="button"
+              class="btn btn-outline-primary mb-2"
+              (click)="avatarInput.click()"
+            >
               Upload a photo...
             </button>
           </div>
@@ -25,6 +29,29 @@
             <button type="button" class="btn btn-outline-danger" (click)="onRemovePhoto()">
               Remove photo
             </button>
+          </div>
+
+          <input
+            #avatarInput
+            type="file"
+            accept="image/png, image/jpeg"
+            class="form-control d-none invisible"
+            (change)="onFileSelected($event)"
+            [ngClass]="{
+              'is-invalid': avatarForm.touched && avatarForm.errors
+            }"
+          />
+
+          <div class="invalid-feedback d-block">
+            <div *ngIf="avatarForm.hasError('filemaxsize', 'avatarSize'); else avatarInvalidType">
+              Please upload a picture smaller than 1 MB.
+            </div>
+
+            <ng-template #avatarInvalidType>
+              <div *ngIf="avatarForm.hasError('filetype', 'avatarType')">
+                We only support PNG or JPG pictures.
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>

@@ -6,7 +6,9 @@ import {
   setDoc,
   docData,
   getDoc,
-  DocumentReference
+  DocumentReference,
+  updateDoc,
+  deleteField
 } from '@angular/fire/firestore';
 import { from, map, Observable, of, switchMap } from 'rxjs';
 import { User } from '../interfaces/user';
@@ -29,6 +31,11 @@ export class UserService {
         return data;
       })
     ) as Observable<User | null>;
+  }
+
+  deleteUserField(uid: string, field: string): Observable<void> {
+    const ref = this.getUserRef(uid);
+    return from(updateDoc(ref, { [field]: deleteField() }));
   }
 
   updateUserDoc(user: User): Observable<void> {
