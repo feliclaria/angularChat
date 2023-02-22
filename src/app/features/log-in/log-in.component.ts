@@ -46,8 +46,4 @@ export class LogInComponent {
         .subscribe();
     }
   }
-
-  onClickLogInWithGoogle() {
-    this.authService.logInWithGoogle().subscribe();
-  }
 }

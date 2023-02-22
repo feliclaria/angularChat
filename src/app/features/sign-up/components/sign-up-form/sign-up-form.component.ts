@@ -38,8 +38,4 @@ export class SignUpFormComponent {
       .createAccount(formValues.username, formValues.email, formValues.password)
       .subscribe();
   }
-
-  onJoinWithGoogleClick() {
-    this.authService.logInWithGoogle().subscribe();
-  }
 }

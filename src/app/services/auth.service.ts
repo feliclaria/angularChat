@@ -5,13 +5,10 @@ import {
   authState,
   ConfirmationResult,
   createUserWithEmailAndPassword,
-  deleteUser,
   EmailAuthProvider,
-  GoogleAuthProvider,
   linkWithPhoneNumber,
   reauthenticateWithCredential,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut,
   updatePassword
 } from '@angular/fire/auth';
@@ -55,20 +52,6 @@ export class AuthService {
 
   logIn(email: string, password: string): Observable<boolean> {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-      switchMap(() => from(this.router.navigateByUrl('/home')))
-    );
-  }
-
-  logInWithGoogle(): Observable<boolean> {
-    return from(signInWithPopup(this.auth, new GoogleAuthProvider())).pipe(
-      switchMap((credential) => {
-        const user = credential.user;
-        return this.userService.updateUserDoc({
-          uid: user.uid,
-          displayName: user.displayName ?? undefined,
-          photoURL: user.photoURL ?? undefined
-        });
-      }),
       switchMap(() => from(this.router.navigateByUrl('/home')))
     );
   }
